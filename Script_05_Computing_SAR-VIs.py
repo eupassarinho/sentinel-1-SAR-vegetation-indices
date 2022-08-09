@@ -25,7 +25,7 @@ import shutil
 # For listing files within a directory matching name patterns:
 import glob
 
-# Fast matrix computation:
+# Fast arrays computation:
 import numpy as np
 
 # Used here to plot satellite bands:

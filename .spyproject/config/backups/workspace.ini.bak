@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['Script_03_ReadingAndVisualizing_Scene.py', 'Script_04_Preprocessing-Sentinel-1_GRD_Scenes.py', 'Script_06_Computing_SAR-VIs.py', 'Preprocessing-Sentinel-1_Scenes.py', 'Script_02_Download-Sentinel1_July-Images.py', 'Sentinel1_Imagery_Download.py']
+recent_files = ['Script_03_ReadingAndVisualizing_Scene.py', 'Script_04_Preprocessing-Sentinel-1_GRD_Scenes.py', 'Script_06_Computing_SAR-VIs.py']
 
 [main]
 version = 0.2.0
