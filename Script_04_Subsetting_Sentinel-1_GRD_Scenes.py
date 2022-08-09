@@ -19,8 +19,11 @@ Contact-me on: erlipinto@gmail.com or erli.santos@ufv.br
 
 #%% REQUESTED MODULES
 
-# For collecting garbage
+# For dealing with directories, to collect garbage, and to delete junkeries,
+# respectively:
+import os
 import gc
+import shutil
 # For listing files within a directory matching name patterns:
 import glob
 # To known processing time:
@@ -39,7 +42,7 @@ from snappy import ProductIO
 #%% READING MULTIPLE PRODUCTS ('.dim') WITH GLOB LOOPING
 
 # Path where Sentinel-1 preprocessed images ('.dim') were located:
-path = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Preprocessed'
+path = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Preprocessed_TEST'
 
 # Only Ground Range Detected images:
 product_type = 'GRD'
@@ -80,7 +83,13 @@ def do_subset(source, wkt):
 
 #%% SUBSETTING SCENES WITH LOOPING
 
-# The looping will overwrite the files in the path directory:
+# Directory to save the cropped products:
+outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\Sentinel1_subset'
+
+if not os.path.exists(outpath):
+    os.makedirs(outpath)
+
+# Applying subset operator:
 
 for i in files:
     
@@ -99,12 +108,21 @@ for i in files:
     ## Start subsetting:
     subset = do_subset(sentinel_1, aoi)
     
+    sentinel_1.dispose()
+    sentinel_1.closeIO()
+    
     del sentinel_1
     gc.collect()
     
     print("Writing...")
-    ProductIO.writeProduct(subset, path + '\\' + product_name + "_sub", 'BEAM-DIMAP')
+    ProductIO.writeProduct(subset, outpath + '\\' + product_name + "_sub", 'BEAM-DIMAP')
     
     print('Done.')
     
     print("--- %s seconds ---" % (time.time() - start_time))
+    
+#%% REMOVING JUNKERIE
+
+# As the crop and export were already applied, the following command will
+# delete the original files:
+shutil.rmtree(path)
