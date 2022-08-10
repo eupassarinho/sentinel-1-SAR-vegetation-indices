@@ -220,7 +220,7 @@ def main(_outpath_):
 #%% DOING PREPROCESSING
 
 # Define your output directory (where the preprocessed scenes shall be saved):
-outpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Preprocessed_TEST'
+outpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Preprocessed'
 
 if __name__== "__main__":
     main(outpath)

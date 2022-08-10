@@ -14,20 +14,17 @@ Contact-me on: erlipinto@gmail.com or erli.santos@ufv.br
 
 """
 
-#%% Necessary packages and modules
+#%% NECESSARY PACKAGES AND MODULES
 
 # For dealing with directories, to collect garbage, and to delete junkeries,
 # respectively:
 import os
 import gc
 import shutil
-
 # For listing files within a directory matching name patterns:
 import glob
-
 # Fast arrays computation:
 import numpy as np
-
 # snappy module to create products:
 from snappy import GPF
 # snappy module to feed functions with parameters:
@@ -41,7 +38,7 @@ from snappy import ProductData
 from snappy import ProductUtils
 #from snappy import ProgressMonitor
 
-#%% Setting work directory and reading files
+#%% SETTING WORK DIRECTORY AND READING FILES
 
 # Path where are located the Pre-processed Sentinel-1 GRD
 path = r'C:\Users\erlis\OneDrive\Área de Trabalho\Preprocessed_TEST'
@@ -59,7 +56,7 @@ files = list(filter(lambda k: product_type in k, files))
 
 print(files)
 
-#%% Defining functions
+#%% DEFINING FUNCTIONS
 
 # Function to compute the CR (Cross-Ratio, Frison et al. (2018)) index,
 # using Gamma0 (in dB). If the data is calibrated to Sigma0, change the band name.
@@ -421,7 +418,7 @@ def do_merge_and_write(_sar_vi_path_, _outpath_):
         del merged_product
         gc.collect()
 
-#%% Applying operators
+#%% APPLYING OPERATORS
 
 # Directory path where the program will store SAR vegetation indices files:
 sar_vi_path = r'C:\Users\erlis\OneDrive\Área de Trabalho\ArquivosTemporarios'
@@ -435,7 +432,11 @@ do_merge_and_write(sar_vi_path, outpath)
 
 gc.collect()
 
-#%% Removing junkerie
+#%% REMOVING JUNKERIE
 
+# As the Dual-pol SAR were compute and merge with its original product, the
+# temporary folder can be deleted, in order to save disk space:
 shutil.rmtree(str(sar_vi_path))
+
+# As well as the original products:
 shutil.rmtree(path)

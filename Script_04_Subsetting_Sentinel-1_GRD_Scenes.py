@@ -8,7 +8,7 @@ Code wroten to perform cropping of Sentinel-1 scenes.
     Outputs: Sentinel-1 GRD preprocessed cropped scenes.
 
 Created on Thu Aug 09, 2022
-Last updated on: Tue Aug 09, 2022
+Last updated on: Tue Aug 10, 2022
 
 This code is part of the Erli Pinto dos Santos' Ph.D. thesis
 
@@ -124,5 +124,5 @@ for i in files:
 #%% REMOVING JUNKERIE
 
 # As the crop and export were already applied, the following command will
-# delete the original files:
+# delete the original files (the preprocessed scenes):
 shutil.rmtree(path)
