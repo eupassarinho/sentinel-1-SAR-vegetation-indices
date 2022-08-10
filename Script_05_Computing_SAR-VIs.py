@@ -128,6 +128,14 @@ def do_dpsvi(source, outpath_):
     VH_i = np.zeros(w, dtype = np.float32)
     VV_i = np.zeros(w, dtype = np.float32)
     
+    # Getting non-NaN max value from VV band:
+    VV_get = np.zeros(w, h, dtype = np.float32)
+    VV_get = VV.readPixels(0, 0, w-1, h-1, VV_get)
+    VV_max = np.nanmax(VV_get)
+    
+    del VV_get
+    gc.collect()
+    
     print("Writing...")
     
     for y in range(h):
@@ -138,7 +146,7 @@ def do_dpsvi(source, outpath_):
         dpsvi = np.multiply(
             np.multiply(
                 # IDPDD:
-                np.divide(np.add(np.subtract(np.nanmax(VV_i), VV_i), VH_i), np.sqrt(2)),
+                np.divide(np.add(np.subtract(VV_max, VV_i), VH_i), np.sqrt(2)),
                 # VDDPI
                 np.divide(np.add(VV_i, VH_i), VV_i)),
                 # VH band
@@ -147,6 +155,9 @@ def do_dpsvi(source, outpath_):
         dpsvi_band.writePixels(0, y, w, 1, dpsvi)
 
     dpsvi_product.closeIO()
+    
+    del VV_max
+    gc.collect()
     
     print("Done.")
 
