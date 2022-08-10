@@ -5,7 +5,7 @@ Code wroten to compute SAR Vegetation Indices using Sentinel-1 GRD post-
 processed products.
 
 Created on Thu Jul 21, 2022
-Last updated on: Thu July 25, 2022
+Last updated on: Wed Aug 10, 2022
 
 This code is part of the Erli's Ph.D. thesis
 
@@ -28,12 +28,6 @@ import glob
 # Fast arrays computation:
 import numpy as np
 
-# Used here to plot satellite bands:
-import matplotlib.pyplot as plt
-
-# For dealing with rasters:
-import gdal
-
 # snappy module to create products:
 from snappy import GPF
 # snappy module to feed functions with parameters:
@@ -50,7 +44,7 @@ from snappy import ProductUtils
 #%% Setting work directory and reading files
 
 # Path where are located the Pre-processed Sentinel-1 GRD
-path = r'J:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Preprocessed'
+path = r'C:\Users\erlis\OneDrive\Área de Trabalho\Preprocessed_TEST'
 
 # Pattern to match in file names (mainly because at the same folder are
 # contained SLC Sentinel-1 archives):
@@ -58,7 +52,7 @@ product_type = 'GRD'
 
 # Using glob to read files with '.tif' extension. If data are in '.dim',
 # chanche it:
-files = glob.glob(path + '**/*.tif')
+files = glob.glob(path + '**/*.dim')
 
 # Reading and storing found files:
 files = list(filter(lambda k: product_type in k, files))
@@ -66,21 +60,6 @@ files = list(filter(lambda k: product_type in k, files))
 print(files)
 
 #%% Defining functions
-
-# Function to visualize bands from products:
-def plotBand(product, band, vmin, vmax):
-    band = product.getBand(band)
-    w = band.getRasterWidth()
-    h = band.getRasterHeight()
-    print(w, h)
-    band_data = np.zeros(w * h, np.float32)
-    band.readPixels(0, 0, w, h, band_data)
-    band_data.shape = h, w
-    width = 12
-    height = 12
-    plt.figure(figsize=(width, height))
-    imgplot = plt.imshow(band_data, cmap = "gray", vmin=vmin, vmax=vmax)
-    return imgplot
 
 # Function to compute the CR (Cross-Ratio, Frison et al. (2018)) index,
 # using Gamma0 (in dB). If the data is calibrated to Sigma0, change the band name.
@@ -127,7 +106,7 @@ def do_cr(source, outpath_):
 
 # Function to compute the DPSVI (Dual-polarization SAR Vegetation Index,
 # Periasamy (2018)) (data are/must be in linear power units):
-def do_dpsvi(source, product_gdal, outpath_):
+def do_dpsvi(source, outpath_):
     
     outpath = str(outpath_)
 
@@ -152,16 +131,6 @@ def do_dpsvi(source, product_gdal, outpath_):
     VH_i = np.zeros(w, dtype = np.float32)
     VV_i = np.zeros(w, dtype = np.float32)
     
-    # Getting max value in VV band using GDAL tools:
-    VV_gdal = product_gdal.GetRasterBand(2) # Band 2 is the VV band
-    VV_gdal = VV_gdal.ReadAsArray()         # Read Gamma0_VV as numpy array
-    VV_max = np.amax(VV_gdal)               # Get max value using numpy
-    
-    del product_gdal
-    gc.collect()
-    del VV_gdal
-    gc.collect()
-    
     print("Writing...")
     
     for y in range(h):
@@ -172,7 +141,7 @@ def do_dpsvi(source, product_gdal, outpath_):
         dpsvi = np.multiply(
             np.multiply(
                 # IDPDD:
-                np.divide(np.add(np.subtract(VV_max, VV_i), VH_i), np.sqrt(2)),
+                np.divide(np.add(np.subtract(np.nanmax(VV_i), VV_i), VH_i), np.sqrt(2)),
                 # VDDPI
                 np.divide(np.add(VV_i, VH_i), VV_i)),
                 # VH band
@@ -181,8 +150,6 @@ def do_dpsvi(source, product_gdal, outpath_):
         dpsvi_band.writePixels(0, y, w, 1, dpsvi)
 
     dpsvi_product.closeIO()
-    del VV_max
-    gc.collect()
     
     print("Done.")
 
@@ -336,7 +303,6 @@ def do_sar_vi(_outpath_):
         print("Reading...")
         
         product = ProductIO.readProduct(str(i))
-        product_gdal = gdal.Open(str(i))
         
         w = product.getSceneRasterWidth()
         h = product.getSceneRasterHeight()
@@ -353,7 +319,7 @@ def do_sar_vi(_outpath_):
         
         do_cr(product, outpath)
         gc.collect()
-        do_dpsvi(product, product_gdal, outpath)
+        do_dpsvi(product, outpath)
         gc.collect()
         do_dpsvim(product, outpath)
         gc.collect()
@@ -376,6 +342,17 @@ def do_merge(source, path_):
     parameters = HashMap()
     merged_bands = GPF.createProduct('BandMerge', parameters,
                                      (cr, dpsvi, dpsvim, pol, rvim))
+    
+    cr.dispose()
+    cr.closeIO()
+    dpsvi.dispose()
+    dpsvi.closeIO()
+    dpsvim.dispose()
+    dpsvim.closeIO()
+    pol.dispose()
+    pol.closeIO()
+    rvim.dispose()
+    rvim.closeIO()
     
     del cr
     gc.collect()
@@ -430,10 +407,17 @@ def do_merge_and_write(_sar_vi_path_, _outpath_):
         print("End time:    " + str(product.getEndTime()))
         print("Bands:       %s" % (list(band_names)))
         
+        print("t\Merging...")
         merged_product = do_merge(product, sar_vi_path)
         
+        print("New product bands:       %s" % (list(merged_product.getBandNames())))
+        print("t\Done!")
         ProductIO.writeProduct(merged_product, outpath + '\\' + name,
                                'BEAM-DIMAP')
+        
+        product.dispose()
+        product.closeIO()
+        
         del merged_product
         gc.collect()
 
