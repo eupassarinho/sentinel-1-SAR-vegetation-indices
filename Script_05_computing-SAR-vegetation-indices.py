@@ -5,7 +5,7 @@ Code wroten to compute SAR Vegetation Indices using Sentinel-1 GRD post-
 processed products.
 
 Created on Thu Jul 21, 2022
-Last updated on: Wed Aug 10, 2022
+Last updated on: Thu Aug 11, 2022
 
 This code is part of the Erli's Ph.D. thesis
 
@@ -41,7 +41,7 @@ from snappy import ProductUtils
 #%% SETTING WORK DIRECTORY AND READING FILES
 
 # Path where are located the Pre-processed Sentinel-1 GRD
-path = r'C:\Users\erlis\OneDrive\Área de Trabalho\Preprocessed_TEST'
+inpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\Sentinel1_subset\Cropped_scenes'
 
 # Pattern to match in file names (mainly because at the same folder are
 # contained SLC Sentinel-1 archives):
@@ -49,7 +49,7 @@ product_type = 'GRD'
 
 # Using glob to read files with '.tif' extension. If data are in '.dim',
 # chanche it:
-files = glob.glob(path + '**/*.dim')
+files = glob.glob(inpath + '**/*.dim')
 
 # Reading and storing found files:
 files = list(filter(lambda k: product_type in k, files))
@@ -432,10 +432,10 @@ def do_merge_and_write(_sar_vi_path_, _outpath_):
 #%% APPLYING OPERATORS
 
 # Directory path where the program will store SAR vegetation indices files:
-sar_vi_path = r'C:\Users\erlis\OneDrive\Área de Trabalho\ArquivosTemporarios'
+sar_vi_path = r'C:\Users\erlis\OneDrive\Área de Trabalho\TemporaryBands'
 # Directory where the program will store merge Sentinel-1 GRD original scenes
 # and its derived SAR Vegetation Indices:
-outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\GRD_Processed'
+outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\Sentinel1_Processed'
 
 # Applying operators:
 do_sar_vi(sar_vi_path)
@@ -450,4 +450,4 @@ gc.collect()
 shutil.rmtree(str(sar_vi_path))
 
 # As well as the original products:
-shutil.rmtree(path)
+shutil.rmtree(inpath)

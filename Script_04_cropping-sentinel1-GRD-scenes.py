@@ -8,7 +8,7 @@ Code wroten to perform cropping of Sentinel-1 scenes.
     Outputs: Sentinel-1 GRD preprocessed cropped scenes.
 
 Created on Thu Aug 09, 2022
-Last updated on: Tue Aug 10, 2022
+Last updated on: Thu Aug 11, 2022
 
 This code is part of the Erli Pinto dos Santos' Ph.D. thesis
 
@@ -42,12 +42,12 @@ from snappy import ProductIO
 #%% READING MULTIPLE PRODUCTS ('.dim') WITH GLOB LOOPING
 
 # Path where Sentinel-1 preprocessed images ('.dim') were located:
-path = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Preprocessed_TEST'
+inpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Preprocessed'
 
 # Only Ground Range Detected images:
 product_type = 'GRD'
 
-files = glob.glob(path + '**/*.dim')
+files = glob.glob(inpath + '**/*.dim')
 
 files = list(filter(lambda k: product_type in k, files))
 
@@ -71,7 +71,7 @@ aoi = aoi.geometry.to_wkt()
 # Casting the aoi from gpd.Series to a WKT (Well-Known-Text) format:
 aoi = aoi[0]
 
-#%% SETTING FUNCTIONS TO DO THE PREPROCESSING
+#%% SETTING FUNCTION
 
 # Defining the function for subsetting scenes:
 def do_subset(source, wkt):
@@ -84,7 +84,7 @@ def do_subset(source, wkt):
 #%% SUBSETTING SCENES WITH LOOPING
 
 # Directory to save the cropped products:
-outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\Sentinel1_subset'
+outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\Sentinel1_subset\Cropped_scenes'
 
 if not os.path.exists(outpath):
     os.makedirs(outpath)
@@ -125,4 +125,4 @@ for i in files:
 
 # As the crop and export were already applied, the following command will
 # delete the original files (the preprocessed scenes):
-shutil.rmtree(path)
+shutil.rmtree(inpath)

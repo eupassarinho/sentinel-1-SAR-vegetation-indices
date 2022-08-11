@@ -7,7 +7,7 @@ Code wroten to perform pre-processing of Sentinel-1 scenes. The goal is to do:
     Terrain Flattening > and to Terrain Correction (with an optional resampling).
 
 Created on Mon Jul 18, 2022
-Last updated on: Tue Aug 09, 2022
+Last updated on: Thu Aug 11, 2022
 
 This code is part of the Erli's Ph.D. thesis
 
@@ -33,24 +33,26 @@ from snappy import HashMap
 # snappy module to import and export SNAP file formats:
 from snappy import ProductIO
 
-#%% DEFINING THE OUTPUT PROJECTION FOR SENTINEL-1 SCENES
-
-projection = '''PROJCS["WGS 84 / UTM zone 23S",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.01745329251994328,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],UNIT["metre",1,AUTHORITY["EPSG","9001"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-45],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",10000000],AUTHORITY["EPSG","32723"],AXIS["Easting",EAST],AXIS["Northing",NORTH]]'''
-
 #%% READING MULTIPLE PRODUCTS ('.zip') WITH GLOB LOOPING
 
 # Path where Sentinel-1 just got ('.zip') were located:
-path = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia'
+inpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia'
 
 # Only Ground Range Detected images:
 product_type = 'GRD'
 
-files = glob.glob(path + '**/*.zip')
+# Note that only ".zip" files will be search, i.e., the files as downloaded in
+# the Script 01:
+files = glob.glob(inpath + '**/*.zip')
 
 files = list(filter(lambda k: product_type in k, files))
 
 # Printing all found files:
 print(files)
+
+#%% DEFINING THE OUTPUT PROJECTION FOR SENTINEL-1 SCENES
+
+projection = '''PROJCS["WGS 84 / UTM zone 23S",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.01745329251994328,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],UNIT["metre",1,AUTHORITY["EPSG","9001"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-45],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",10000000],AUTHORITY["EPSG","32723"],AXIS["Easting",EAST],AXIS["Northing",NORTH]]'''
 
 #%% SETTING FUNCTIONS TO DO THE PREPROCESSING
 
@@ -224,3 +226,4 @@ outpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Pre
 
 if __name__== "__main__":
     main(outpath)
+
