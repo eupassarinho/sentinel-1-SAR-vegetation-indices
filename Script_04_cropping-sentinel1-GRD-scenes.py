@@ -32,12 +32,11 @@ import time
 import datetime
 # For dealing with geospatial data frame and spatial files (as .shp)
 import geopandas as gpd
-# snappy module to create products:
-from snappy import GPF
-# snappy module to feed functions with parameters:
-from snappy import HashMap
-# snappy module to import and export SNAP file formats:
-from snappy import ProductIO
+# snappy module:
+import snappy
+# snappy module to import/export SNAP file formats, and to set
+# WKT (Well-Known-Text) Area of Interest (AOI):
+from snappy import ProductIO, WKTReader
 
 #%% READING MULTIPLE PRODUCTS ('.dim') WITH GLOB LOOPING
 
@@ -65,59 +64,61 @@ print(files)
 shapefile_path = r'C:\Users\erlis\Documents\MEGA\Projeto_de_pesquisa_Doutorado\Database\VectorData'
 
 # Importing aoi shapefile as a geopandas object:
-aoi = gpd.read_file(shapefile_path + '\TESTE_SOC_BW_July_convexHullPolygon.shp')
+aoi = gpd.read_file(shapefile_path + '\SOC_BW_NDec_convexHullPolygon.shp')
 # Casting the aoi from geopandas to a gpd.Series object:
 aoi = aoi.geometry.to_wkt()
 # Casting the aoi from gpd.Series to a WKT (Well-Known-Text) format:
 aoi = aoi[0]
 
-#%% SETTING FUNCTION
-
-# Defining the function for subsetting scenes:
-def do_subset(source, wkt):
-    print('\tSubsetting...')
-    parameters = HashMap()
-    parameters.put('geoRegion', wkt)
-    output = GPF.createProduct('Subset', parameters, source)
-    return output
-
 #%% SUBSETTING SCENES WITH LOOPING
 
 # Directory to save the cropped products:
-outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\Sentinel1_subset\Cropped_scenes'
+outpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\PreprocessedAndCropped'
 
 if not os.path.exists(outpath):
     os.makedirs(outpath)
 
-# Applying subset operator:
+# Getting the subset operator:
+SubsetOp = snappy.jpy.get_type('org.esa.snap.core.gpf.common.SubsetOp')
+geom = WKTReader().read(aoi)
 
+# Applying subset operator:
 for i in files:
     
     gc.enable()
     gc.collect()
     
-    sentinel_1 = ProductIO.readProduct(str(i))
+    print("Reading...")
     
+    sentinel_1 = ProductIO.readProduct(str(i))
     product_name = sentinel_1.getName()
-    print(sentinel_1)
+    print("Product:", product_name)
 
     loopstarttime = str(datetime.datetime.now())
     print('Start time:', loopstarttime)
     start_time = time.time()
 
     ## Start subsetting:
-    subset = do_subset(sentinel_1, aoi)
+    op = SubsetOp()
+    op.setSourceProduct(sentinel_1)
+    op.setGeoRegion(geom)
+    op.setCopyMetadata(True)
+    
+    sub_product = op.getTargetProduct()
+
+    print("Writing...")
+    ProductIO.writeProduct(sub_product, outpath + '\\' + product_name + "_sub",
+                           "BEAM-DIMAP")
+    print("Done.")    
     
     sentinel_1.dispose()
     sentinel_1.closeIO()
-    
     del sentinel_1
     gc.collect()
-    
-    print("Writing...")
-    ProductIO.writeProduct(subset, outpath + '\\' + product_name + "_sub", 'BEAM-DIMAP')
-    
-    print('Done.')
+    sub_product.dispose()
+    sub_product.closeIO()
+    del sub_product
+    gc.collect()
     
     print("--- %s seconds ---" % (time.time() - start_time))
     

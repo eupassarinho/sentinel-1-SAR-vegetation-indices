@@ -122,7 +122,7 @@ else:
 #%% USE THIS CHUNK TO DOWNLOAD A SINGLE PRODUCT
 
 # Directory to save the image:
-outpath = r'C:/Users/erlis/Documents/Sentinel1_over_BahiaWestern'
+outpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Level_1'
 
 results[results_index].download(path = str(outpath), session = user_pass_session)
 
@@ -130,8 +130,8 @@ listdir(outpath)
 
 #%% USE THIS CHUNK TO DOWNLOAD MULTIPLE PRODUCTS
 
-outpath = r'C:/Users/erlis/Documents/Sentinel1_over_BahiaWestern'
+outpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Level_1'
 
 results[8:11].download(path = str(outpath), session = user_pass_session)
 
-listdir("C:/Users/erlis/Documents/Sentinel1_over_BahiaWestern")
+listdir(outpath)
