@@ -5,7 +5,7 @@ Code wroten to compute SAR Vegetation Indices using Sentinel-1 GRD post-
 processed products.
 
 Created on Thu Jul 21, 2022
-Last updated on: Thu Aug 11, 2022
+Last updated on: Fri Aug 12, 2022
 
 This code is part of the Erli's Ph.D. thesis
 
@@ -34,14 +34,12 @@ from snappy import Product
 # snappy module to import and export SNAP file formats:
 from snappy import ProductIO
 # snappy module to get product metadata:
-from snappy import ProductData
-from snappy import ProductUtils
-#from snappy import ProgressMonitor
+from snappy import ProductData, ProductUtils
 
 #%% SETTING WORK DIRECTORY AND READING FILES
 
 # Path where are located the Pre-processed Sentinel-1 GRD
-inpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\Sentinel1_subset\Cropped_scenes'
+inpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\PreprocessedAndCropped'
 
 # Pattern to match in file names (mainly because at the same folder are
 # contained SLC Sentinel-1 archives):
@@ -85,10 +83,10 @@ def do_cr(source, outpath_):
     VH_i = np.zeros(w, dtype = np.float32)
     VV_i = np.zeros(w, dtype = np.float32)
 
-    print("Writing...")
+    print("Writing CR band...")
 
     for y in range(h):
-        print("Processing line ", y, " of ", h)
+        #print("Processing line ", y, " of ", h)
         VH_i = VH.readPixels(0, y, w, 1, VH_i)
         VV_i = VV.readPixels(0, y, w, 1, VV_i)
         
@@ -129,17 +127,18 @@ def do_dpsvi(source, outpath_):
     VV_i = np.zeros(w, dtype = np.float32)
     
     # Getting non-NaN max value from VV band:
-    VV_get = np.zeros(w, h, dtype = np.float32)
+    VV_get = np.zeros((w, h), dtype = np.float32)
     VV_get = VV.readPixels(0, 0, w-1, h-1, VV_get)
     VV_max = np.nanmax(VV_get)
+    print("Max non-NaN in VV band: ", VV_max)
     
     del VV_get
     gc.collect()
     
-    print("Writing...")
+    print("Writing DPSVI band...")
     
     for y in range(h):
-        print("Processing line ", y, " of ", h)
+        #print("Processing line ", y, " of ", h)
         VH_i = VH.readPixels(0, y, w, 1, VH_i)
         VV_i = VV.readPixels(0, y, w, 1, VV_i)
         
@@ -188,10 +187,10 @@ def do_dpsvim(source, outpath_):
     VH_i = np.zeros(w, dtype = np.float32)
     VV_i = np.zeros(w, dtype = np.float32)
 
-    print("Writing...")
+    print("Writing DPSVIm band...")
 
     for y in range(h):
-        print("Processing line ", y, " of ", h)
+        #print("Processing line ", y, " of ", h)
         VH_i = VH.readPixels(0, y, w, 1, VH_i)
         VV_i = VV.readPixels(0, y, w, 1, VV_i)
         
@@ -232,10 +231,10 @@ def do_pol(source, outpath_):
     VH_i = np.zeros(w, dtype = np.float32)
     VV_i = np.zeros(w, dtype = np.float32)
 
-    print("Writing...")
+    print("Writing Pol band...")
 
     for y in range(h):
-        print("Processing line ", y, " of ", h)
+        #print("Processing line ", y, " of ", h)
         VH_i = VH.readPixels(0, y, w, 1, VH_i)
         VV_i = VV.readPixels(0, y, w, 1, VV_i)
         
@@ -276,10 +275,10 @@ def do_rvim(source, outpath_):
     VH_i = np.zeros(w, dtype = np.float32)
     VV_i = np.zeros(w, dtype = np.float32)
 
-    print("Writing...")
+    print("Writing RVIm band...")
 
     for y in range(h):
-        print("Processing line ", y, " of ", h)
+        #print("Processing line ", y, " of ", h)
         VH_i = VH.readPixels(0, y, w, 1, VH_i)
         VV_i = VV.readPixels(0, y, w, 1, VV_i)
         
@@ -351,16 +350,16 @@ def do_merge(source, path_):
     merged_bands = GPF.createProduct('BandMerge', parameters,
                                      (cr, dpsvi, dpsvim, pol, rvim))
     
-    cr.dispose()
-    cr.closeIO()
-    dpsvi.dispose()
-    dpsvi.closeIO()
-    dpsvim.dispose()
-    dpsvim.closeIO()
-    pol.dispose()
-    pol.closeIO()
-    rvim.dispose()
-    rvim.closeIO()
+    #cr.dispose()
+    #cr.closeIO()
+    #dpsvi.dispose()
+    #dpsvi.closeIO()
+    #dpsvim.dispose()
+    #dpsvim.closeIO()
+    #pol.dispose()
+    #pol.closeIO()
+    #rvim.dispose()
+    #rvim.closeIO()
     
     del cr
     gc.collect()
@@ -415,11 +414,11 @@ def do_merge_and_write(_sar_vi_path_, _outpath_):
         print("End time:    " + str(product.getEndTime()))
         print("Bands:       %s" % (list(band_names)))
         
-        print("t\Merging...")
+        print("Merging...")
         merged_product = do_merge(product, sar_vi_path)
         
         print("New product bands:       %s" % (list(merged_product.getBandNames())))
-        print("t\Done!")
+        print("Done!")
         ProductIO.writeProduct(merged_product, outpath + '\\' + name,
                                'BEAM-DIMAP')
         
@@ -435,7 +434,7 @@ def do_merge_and_write(_sar_vi_path_, _outpath_):
 sar_vi_path = r'C:\Users\erlis\OneDrive\Área de Trabalho\TemporaryBands'
 # Directory where the program will store merge Sentinel-1 GRD original scenes
 # and its derived SAR Vegetation Indices:
-outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\Sentinel1_Processed'
+outpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\GRD_Processed'
 
 # Applying operators:
 do_sar_vi(sar_vi_path)
@@ -449,5 +448,5 @@ gc.collect()
 # temporary folder can be deleted, in order to save disk space:
 shutil.rmtree(str(sar_vi_path))
 
-# As well as the original products:
+# As well as the cropped products, once we have merged all of them:
 shutil.rmtree(inpath)

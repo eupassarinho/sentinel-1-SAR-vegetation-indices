@@ -64,7 +64,7 @@ print(files)
 shapefile_path = r'C:\Users\erlis\Documents\MEGA\Projeto_de_pesquisa_Doutorado\Database\VectorData'
 
 # Importing aoi shapefile as a geopandas object:
-aoi = gpd.read_file(shapefile_path + '\SOC_BW_NDec_convexHullPolygon.shp')
+aoi = gpd.read_file(shapefile_path + '\SOC_BW_July_convexHullPolygon.shp')
 # Casting the aoi from geopandas to a gpd.Series object:
 aoi = aoi.geometry.to_wkt()
 # Casting the aoi from gpd.Series to a WKT (Well-Known-Text) format:

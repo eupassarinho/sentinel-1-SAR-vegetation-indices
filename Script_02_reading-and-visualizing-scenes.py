@@ -27,7 +27,7 @@ from snappy import ProductIO
 #%% READING MULTIPLE PRODUCTS ('.zip') WITH GLOB LOOPING
 
 # Path where Sentinel-1 just got ('.zip') were located:
-path = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Level_1'
+path = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\GRD_Level_1'
 
 # Only Ground Range Detected images:
 product_type = 'GRD'
