@@ -7,12 +7,15 @@ Alaska Satellite Facility module.
     searching parameters;
     Output: Selected Sentinel-1 scenes.
 
-WARNING:
+WARNING 1:
     The first part of this script only deal with Excel files containing
     geographical points. Then a convex hull polygon is created based on
     filtered point coordinates.
     If you already has a polygon to do your geographical search, just step the
     first part.
+WARNING 2:
+    If you are using a Python 3.6 environment, it is probable that batch
+    download won't work properly, because "download" is not a list property.
     
 Created on Wed Jul 13, 2022
 Last updated on: Mon Aug 15, 2022
