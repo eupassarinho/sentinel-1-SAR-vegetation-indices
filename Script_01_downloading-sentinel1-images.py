@@ -15,7 +15,7 @@ WARNING:
     first part.
     
 Created on Wed Jul 13, 2022
-Last updated on: Thu Aug 11, 2022
+Last updated on: Mon Aug 15, 2022
 
 This code is part of the Erli's Ph.D. thesis
 
@@ -55,6 +55,7 @@ SOC_BahiaWestern = pd.read_excel(
 # month of the sample. It do it throught pandas Series.dt properties of
 # datetime structured data: 
 SOC_BahiaWestern['month'] = SOC_BahiaWestern['DATA'].dt.month
+#SOC_BahiaWestern = SOC_BahiaWestern[SOC_BahiaWestern.month == 7]
 
 #%% TRANSFORMING THE DATA FRAME IN A GEODATAFRAME
 
@@ -90,7 +91,7 @@ print(f'{len(results)} results found')
 #%% VISUALIZING BOTH A SELECTED IMAGE FOOTPRINT AND THE SEARCH POLYGON
 
 # Set a index for selecting a item in the results object:
-results_index = 8
+results_index = 11
 
 # Getting a image footprint:
 footprint = gpd.GeoSeries(shape(results[results_index].geometry))
@@ -113,7 +114,7 @@ print(results[results_index])
 session = asf.ASFSession()
 
 try:
-    user_pass_session = asf.ASFSession().auth_with_creds("Erli", "Parabellum22")
+    user_pass_session = asf.ASFSession().auth_with_creds("Erli", "ParAbelLum22#")
 except asf.ASFAuthenticationError as e:
     print(f'Auth failed: {e}')
 else:
@@ -122,7 +123,7 @@ else:
 #%% USE THIS CHUNK TO DOWNLOAD A SINGLE PRODUCT
 
 # Directory to save the image:
-outpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\GRD_Level_1'
+outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\GRD_Level_1'
 
 results[results_index].download(path = str(outpath), session = user_pass_session)
 
@@ -130,8 +131,12 @@ listdir(outpath)
 
 #%% USE THIS CHUNK TO DOWNLOAD MULTIPLE PRODUCTS
 
-outpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\GRD_Level_1'
+# WARNING: If you are using a Python 3.6 environment, it is probable that this
+# chunk won't work properly, because "download" is not a list property.
 
-results[8:11].download(path = str(outpath), session = user_pass_session)
+# Directory to save the image:
+outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\GRD_Level_1'
+
+results[4:8].download(path = str(outpath), session = user_pass_session)
 
 listdir(outpath)
