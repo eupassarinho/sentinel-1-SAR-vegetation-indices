@@ -18,7 +18,7 @@
 ## Output: Excel file with collected samples.
 
 # Created on Sun Oct 03, 2021
-# Last updated on: Mon Aug 15, 2022
+# Last updated on: Mon Aug 16, 2022
 
 # This code is part of the Erli's Ph.D. thesis
 
@@ -26,16 +26,14 @@
 # Contact-me on: erlipinto@gmail.com or erli.santos@ufv.br
 
 # REQUESTED PACKAGES ------------------------------------------------------
-
 library(terra)      # Fast raster manipulation
-library(rgdal)      # Geospatial library
 
 # For data wrangling
 library(dplyr)      # For data wrangling
 library(tidyr)      # For data organization
 library(tibble)     # A enhanced data.frame
-library(readxl)     # Excel sheet handling
-library(writexl)    # To write ".xlsx" sheets
+library(readxl)     # For reading Excel files
+library(writexl)    # To write Excel (".xlsx") files
 library(lubridate)  # For dealing with date variables
 
 # INPUT POINTS VECTOR -----------------------------------------------------
@@ -49,14 +47,15 @@ df <- read_xlsx(
 
 ## Filtering data frame:
 df <- df %>% mutate(SampleMonth = month(DATA)) %>%
-  filter(SampleMonth == 7)
+  filter(SampleMonth != 7)
 
 ## Transforming data frame containing coordinate points to a spatial vector (
 ## terra SpatVector):
 
 sampling_points <- vect(df,
                         geom = c("LON", "LAT"), # Lon and Lat (in this order)
-                        crs = "EPSG:4326")      # WGS84 (original from file)
+                        crs = "EPSG:4326",      # WGS84 (original from file)
+                        keep = TRUE)      
 
 # Reproject SpatVector to match with SpatRaster projection:
 sampling_points <- terra::project(sampling_points,
@@ -81,13 +80,13 @@ rm(i)
 # INPUT RASTER PRODUCTS ---------------------------------------------------
 ## Setting directory where BEAM-DIMAP product files and its
 ## ".data" sub directories are located:
-input_products_path <- "C:/Users/erlis/OneDrive/Área de Trabalho/Preprocessed"
+input_products_path <- "I:/Dados_Raster/Projeto_de_pesquisa_Doutorado/Solos_OesteDaBahia/GRD_Processed"
 
 ## Getting a list of BEAM-DIMAP product directories (one for each product):
 products_list <- list.files(input_products_path, pattern = ".data")
 
 # SETTING OUTPUT DIRECTORY FOR SAVING COLLECTED SAMPLES -------------------
-output_directory <- "C:/Users/erlis/OneDrive/Área de Trabalho/GRD_Samples"
+output_directory <- "I:/Dados_Raster/Projeto_de_pesquisa_Doutorado/Solos_OesteDaBahia/GRD_Samples"
 
 # LOOPING TO SAMPLING EACH RASTER PRODUCT (ONE OR MORE THAN) --------------
 
