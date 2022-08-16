@@ -44,7 +44,7 @@ print(files)
 product = ProductIO.readProduct(str(files[0]))
 
 # Getting band names:
-list(product.getBandNames())
+print(list(product.getBandNames()))
 
 #%% DEFINING FUNCTION TO PLOT BAND
 
@@ -65,4 +65,4 @@ def plotBand(product, band, vmin, vmax):
 
 #%% VISUALIZING BAND:
     
-plotBand(product, 'Amplitude_VH', 0, 100)
+plotBand(product, 'Amplitude_VH', 0, 150)
