@@ -4,7 +4,7 @@
 Code wroten to read and view Sentinel-1 products.
 
 Created on Mon Jul 18, 2022
-Last updated on: Wed July 20, 2022
+Last updated on: Tue Aug 16, 2022
 
 This code is part of the Erli's Ph.D. thesis
 
@@ -65,4 +65,4 @@ def plotBand(product, band, vmin, vmax):
 
 #%% VISUALIZING BAND:
     
-plotBand(product, 'Amplitude_VH', 0, 10)
+plotBand(product, 'Amplitude_VH', 0, 100)

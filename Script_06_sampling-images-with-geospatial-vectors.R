@@ -18,11 +18,7 @@
 ## Output: Excel file with collected samples.
 
 # Created on Sun Oct 03, 2021
-<<<<<<< HEAD
 # Last updated on: Mon Aug 15, 2022
-=======
-# Last updated on: Sun Aug 14, 2022
->>>>>>> 53c60d242de05c862311fbf9448a422f2ac2f40f
 
 # This code is part of the Erli's Ph.D. thesis
 
@@ -42,16 +38,6 @@ library(readxl)     # Excel sheet handling
 library(writexl)    # To write ".xlsx" sheets
 library(lubridate)  # For dealing with date variables
 
-<<<<<<< HEAD
-=======
-# For optimizating
-library(doParallel)
-
-n_Core <- detectCores()-2
-cl <- makePSOCKcluster(n_Core)
-registerDoParallel(cl)
-
->>>>>>> 53c60d242de05c862311fbf9448a422f2ac2f40f
 # INPUT POINTS VECTOR -----------------------------------------------------
 ## Setting the path where the sampling points are located:
 input_points_path <- "C:/Users/erlis/Documents/MEGA/Projeto_de_pesquisa_Doutorado/Database/Solos_Bahia"
@@ -95,21 +81,13 @@ rm(i)
 # INPUT RASTER PRODUCTS ---------------------------------------------------
 ## Setting directory where BEAM-DIMAP product files and its
 ## ".data" sub directories are located:
-<<<<<<< HEAD
-input_products_path <- "I:/Dados_Raster/Projeto_de_pesquisa_Doutorado/Solos_OesteDaBahia/GRD_Processed"
-=======
-input_products_path <- "C:/Users/erlis/Downloads/GRD_Processed"
->>>>>>> 53c60d242de05c862311fbf9448a422f2ac2f40f
+input_products_path <- "C:/Users/erlis/OneDrive/Área de Trabalho/Preprocessed"
 
 ## Getting a list of BEAM-DIMAP product directories (one for each product):
 products_list <- list.files(input_products_path, pattern = ".data")
 
 # SETTING OUTPUT DIRECTORY FOR SAVING COLLECTED SAMPLES -------------------
-<<<<<<< HEAD
-output_directory <- "I:/Dados_Raster/Projeto_de_pesquisa_Doutorado/Solos_OesteDaBahia/GRD_Samples"
-=======
-output_directory <- "C:/Users/erlis/Downloads/GRD_Samples"
->>>>>>> 53c60d242de05c862311fbf9448a422f2ac2f40f
+output_directory <- "C:/Users/erlis/OneDrive/Área de Trabalho/GRD_Samples"
 
 # LOOPING TO SAMPLING EACH RASTER PRODUCT (ONE OR MORE THAN) --------------
 
@@ -124,12 +102,9 @@ for (i in seq(along.with = products_list)) {
   bands2stack <- rast(paste0(input_products_path, "/", products_list[i], "/",
                              product_bands))
   ## Getting the product name:
-<<<<<<< HEAD
+
   product_name <- substr(products_list[i], start = 0, stop = 96)
-=======
-  product_name <- substr(products_list, start = 0, stop = 96)
->>>>>>> 53c60d242de05c862311fbf9448a422f2ac2f40f
-  
+
   ## SAMPLING RASTER STACK:
   if (exists("points2buffers")) {
     
@@ -326,11 +301,7 @@ for (i in seq(along.with = products_list)) {
     dir.create(output_directory)
     print("Done.")
     
-<<<<<<< HEAD
     print(paste0("Exporting ", product_name, " samples..."))
-=======
-    print("Exporting samples...")
->>>>>>> 53c60d242de05c862311fbf9448a422f2ac2f40f
     
     write_xlsx(raster2samples,
                path = paste0(output_directory, "/", product_name,
@@ -341,11 +312,8 @@ for (i in seq(along.with = products_list)) {
     
   } else {
     print("Directory already exists!")
-<<<<<<< HEAD
+
     print(paste0("Exporting ", product_name, " samples..."))
-=======
-    print("Exporting samples...")
->>>>>>> 53c60d242de05c862311fbf9448a422f2ac2f40f
     
     write_xlsx(raster2samples,
                path = paste0(output_directory, "/", product_name,
