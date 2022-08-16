@@ -47,7 +47,7 @@ df <- read_xlsx(
 
 ## Filtering data frame:
 df <- df %>% mutate(SampleMonth = month(DATA)) %>%
-  filter(SampleMonth != 7)
+  filter(SampleMonth == 7)
 
 ## Transforming data frame containing coordinate points to a spatial vector (
 ## terra SpatVector):
