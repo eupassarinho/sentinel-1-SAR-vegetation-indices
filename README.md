@@ -57,4 +57,9 @@ After processing raster products, use this script to sample raster bands either 
 
 ![Pipeline_framework-Script_06](https://user-images.githubusercontent.com/52005057/184925805-9008c05e-25a5-462c-945d-51c30c3fc5ec.png)
 
+## Final speech
+
+This code is part of the Erli's Ph.D. thesis and its papers (author: Erli Pinto dos Santos).
+
 Enjoy it, and feel free to contact me anytime.
+Contact-me on: erlipinto@gmail.com or erli.santos@ufv.br
