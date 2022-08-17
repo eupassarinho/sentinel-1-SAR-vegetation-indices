@@ -1,6 +1,25 @@
-O objetivo desse projeto é realizar o download de imagens Sentinel-1 GRD (Ground Range Detected) do modo de imageamento IW (Interferometric Wide) e em seguida realizar o pré-processamento das imagens baixadas para gerar as bandas de polarização VH e VV em unidade de potência linear projetadas para gamma0. Depois disso, as bandas VV e VH são usadas para calcular os índices de vegetação de dupla polarização desenvolvidos ou adaptados para imagens Sentinel-1.
+# Intro
+
+The primary purpose of this repo is the need for a pipeline for downloading and preprocessing Sentinel-1 Ground Range Detected (GRD) images, computing Dual-polarization SAR vegetation indices, and sampling (with points coordinates) the processed scenes over a given Area of Interest (AOI). So, you are gonna find here both Spyder and RStudio (IDEs) projects and their scripts to do the above-mentioned steps.
+
+### The repository, its Spyder and RStudio projects, and its codes were build upon the requirements:
+1) To bring both Python and R capabilities of dealing with raster products. The radar products processing is feasible using Python resources, while raster sampling is faster using R resources.
+
+2) It uses the packages: **asf_search** (Python 3.9), for downloading satellite products, main radar satellites, from the Alaska Satellite Facility; **snappy** (Python 3.6), the Python implementation of the SeNtinel Application Platform, from the European Space Agency (SNAP-ESA), which contains the Sentinel-1 Toolbox; and the **terra** package (R version 4.2.1), for dealing with raster and vectors fastest than other resources.
+
+3) I tried not to personalize the pipeline, as you can personalize on your way and needs. This means that you are free to change it on your way, e.g., changing Sentinel-1 algorithms, methods, AOI, etc.
+
+4) I advise you to peek rapidly at the below-presented flowcharts, as they mean to summarize what the codes exactly do.
 
 ### Script 01: geographical search and batch download of SAR data in the Alaska Satellite Facility (ASF) dataset:
+
+This code uses asf_search resources to do a geographical search within ASF SAR data catalogue, learn more on how its features work in:
+
+1) **asf_search Basics**: https://docs.asf.alaska.edu/asf_search/basics/
+2) **Bulk Download Sentinel 1 SAR Data**: https://medium.com/geekculture/bulk-download-sentinel-1-sar-data-d180ec0bfac1
+3) (in Portuguese) **Download simultâneo de várias imagens de SAR (como Sentinel-1) via Python**: https://erlipinto.medium.com/download-simult%C3%A2neo-de-v%C3%A1rias-imagens-de-sar-como-sentinel-1-via-python-ba4c89011ccb
+
+**WARNING**: to do bulk products download use a Python 3.9 environment. 
 
 ![Pipeline_framework-Script_01](https://user-images.githubusercontent.com/52005057/184925308-32fbb954-22cb-41f6-b392-1be074eca7ea.png)
 
