@@ -18,7 +18,7 @@ WARNING 2:
     download won't work properly, because "download" is not a list property.
     
 Created on Wed Jul 13, 2022
-Last updated on: Mon Aug 15, 2022
+Last updated on: Wed Aug 17, 2022
 
 This code is part of the Erli's Ph.D. thesis
 
@@ -43,13 +43,13 @@ from shapely.geometry import MultiPoint, shape
 
 #%% USING PANDAS TO IMPORT THE DATASET CONTAINING SAMPLING POINTS:
 
-file_path = r'C:/Users/erlis/Documents/MEGA/Projeto_de_pesquisa_Doutorado/Database/Solos_Bahia'
+file_path = r'C:/Users/MyName/Documents'
 
 # As my geographic coordinates are stored in a Excel file, I'm importing it
 # as a pandas object:
 SOC_BahiaWestern = pd.read_excel(
-    io = file_path + '\\' + "05_EstoqueC_Dados_campobruto_dionizio_erli.xlsx",
-    sheet_name = "atividadeIsabel", skiprows = 1
+    io = file_path + '\\' + "MyExcelSpatialDatabase.xlsx",
+    sheet_name = "Sheet1", skiprows = 1
     )
 
 # As the coordinates are labeled with the date (moth) which them were
