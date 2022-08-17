@@ -47,7 +47,7 @@ file_path = r'C:/Users/MyName/Documents'
 
 # As my geographic coordinates are stored in a Excel file, I'm importing it
 # as a pandas object:
-SOC_BahiaWestern = pd.read_excel(
+myPandasDF = pd.read_excel(
     io = file_path + '\\' + "MyExcelSpatialDatabase.xlsx",
     sheet_name = "Sheet1", skiprows = 1
     )
@@ -57,18 +57,18 @@ SOC_BahiaWestern = pd.read_excel(
 # of the points, the following command creates a new variable for storing the
 # month of the sample. It do it throught pandas Series.dt properties of
 # datetime structured data: 
-SOC_BahiaWestern['month'] = SOC_BahiaWestern['DATA'].dt.month
-#SOC_BahiaWestern = SOC_BahiaWestern[SOC_BahiaWestern.month == 7]
+myPandasDF['month'] = myPandasDF['DATA'].dt.month
+#myPandasDF = myPandasDF[myPandasDF.month == 7]
 
 #%% TRANSFORMING THE DATA FRAME IN A GEODATAFRAME
 
-SOC_BahiaWestern = gpd.GeoDataFrame(
-    SOC_BahiaWestern,
-    geometry = gpd.points_from_xy(SOC_BahiaWestern.LON, SOC_BahiaWestern.LAT)
+myPandasDF = gpd.GeoDataFrame(
+    myPandasDF,
+    geometry = gpd.points_from_xy(myPandasDF.LON, myPandasDF.LAT)
     )
 
 # Creating the AOI via convex hull polygon:
-aoi = gpd.GeoSeries(MultiPoint(SOC_BahiaWestern['geometry']))
+aoi = gpd.GeoSeries(MultiPoint(myPandasDF['geometry']))
 aoi = aoi.convex_hull
 
 #aoi.plot()
@@ -117,7 +117,7 @@ print(results[results_index])
 session = asf.ASFSession()
 
 try:
-    user_pass_session = asf.ASFSession().auth_with_creds("Erli", "ParAbelLum22#")
+    user_pass_session = asf.ASFSession().auth_with_creds("username", "password")
 except asf.ASFAuthenticationError as e:
     print(f'Auth failed: {e}')
 else:
@@ -126,7 +126,7 @@ else:
 #%% USE THIS CHUNK TO DOWNLOAD A SINGLE PRODUCT
 
 # Directory to save the image:
-outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\GRD_Level_1'
+outpath = r'C:\Users\GRD_Level_1'
 
 results[results_index].download(path = str(outpath), session = user_pass_session)
 
@@ -138,7 +138,7 @@ listdir(outpath)
 # chunk won't work properly, because "download" is not a list property.
 
 # Directory to save the image:
-outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\GRD_Level_1'
+outpath = r'C:\Users\GRD_Level_1'
 
 results[4:8].download(path = str(outpath), session = user_pass_session)
 

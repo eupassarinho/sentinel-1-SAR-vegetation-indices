@@ -18,7 +18,7 @@
 ## Output: Excel file with collected samples.
 
 # Created on Sun Oct 03, 2021
-# Last updated on: Mon Aug 16, 2022
+# Last updated on: Wed Aug 17, 2022
 
 # This code is part of the Erli's Ph.D. thesis
 
@@ -38,12 +38,12 @@ library(lubridate)  # For dealing with date variables
 
 # INPUT POINTS VECTOR -----------------------------------------------------
 ## Setting the path where the sampling points are located:
-input_points_path <- "C:/Users/erlis/Documents/MEGA/Projeto_de_pesquisa_Doutorado/Database/Solos_Bahia"
+input_points_path <- "C:/Users/MyName/Documents"
 
 ## In this case, I've a excel file containing Longitude and Latitude
 ## coordinates:
 df <- read_xlsx(
-  paste0(input_points_path, "/05_EstoqueC_Dados_campobruto_dionizio_erli.xlsx"))
+  paste0(input_points_path, "/MyExcelSpatialDatabase.xlsx"))
 
 ## Filtering data frame:
 df <- df %>% mutate(SampleMonth = month(DATA)) %>%
@@ -80,13 +80,13 @@ rm(i)
 # INPUT RASTER PRODUCTS ---------------------------------------------------
 ## Setting directory where BEAM-DIMAP product files and its
 ## ".data" sub directories are located:
-input_products_path <- "I:/Dados_Raster/Projeto_de_pesquisa_Doutorado/Solos_OesteDaBahia/GRD_Processed"
+input_products_path <- "C:/Users/GRD_Processed"
 
 ## Getting a list of BEAM-DIMAP product directories (one for each product):
 products_list <- list.files(input_products_path, pattern = ".data")
 
 # SETTING OUTPUT DIRECTORY FOR SAVING COLLECTED SAMPLES -------------------
-output_directory <- "I:/Dados_Raster/Projeto_de_pesquisa_Doutorado/Solos_OesteDaBahia/GRD_Samples"
+output_directory <- "C:/Users/GRD_Samples"
 
 # LOOPING TO SAMPLING EACH RASTER PRODUCT (ONE OR MORE THAN) --------------
 

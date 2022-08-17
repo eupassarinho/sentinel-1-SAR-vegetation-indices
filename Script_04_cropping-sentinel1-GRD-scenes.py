@@ -8,7 +8,7 @@ Code wroten to perform cropping of Sentinel-1 scenes.
     Outputs: Sentinel-1 GRD preprocessed cropped scenes.
 
 Created on Thu Aug 09, 2022
-Last updated on: Thu Aug 11, 2022
+Last updated on: Wed Aug 17, 2022
 
 This code is part of the Erli Pinto dos Santos' Ph.D. thesis
 
@@ -41,7 +41,7 @@ from snappy import ProductIO, WKTReader
 #%% READING MULTIPLE PRODUCTS ('.dim') WITH GLOB LOOPING
 
 # Path where Sentinel-1 preprocessed images ('.dim') were located:
-inpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Preprocessed'
+inpath = r'C:\Users\Preprocessed'
 
 # Only Ground Range Detected images:
 product_type = 'GRD'
@@ -61,10 +61,10 @@ print(files)
 # understand and make the subsetting.
 
 # Directory where the aoi shapefile is located:
-shapefile_path = r'C:\Users\erlis\Documents\MEGA\Projeto_de_pesquisa_Doutorado\Database\VectorData'
+shapefile_path = r'C:\Users\VectorData'
 
 # Importing aoi shapefile as a geopandas object:
-aoi = gpd.read_file(shapefile_path + '\SOC_BW_July_convexHullPolygon.shp')
+aoi = gpd.read_file(shapefile_path + '\MyAOIshapefile.shp')
 # Casting the aoi from geopandas to a gpd.Series object:
 aoi = aoi.geometry.to_wkt()
 # Casting the aoi from gpd.Series to a WKT (Well-Known-Text) format:
@@ -73,7 +73,7 @@ aoi = aoi[0]
 #%% SUBSETTING SCENES WITH LOOPING
 
 # Directory to save the cropped products:
-outpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\PreprocessedAndCropped'
+outpath = r'C:\Users\PreprocessedAndCropped'
 
 if not os.path.exists(outpath):
     os.makedirs(outpath)

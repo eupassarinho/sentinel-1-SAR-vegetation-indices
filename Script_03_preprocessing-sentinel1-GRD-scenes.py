@@ -7,7 +7,7 @@ Code wroten to perform pre-processing of Sentinel-1 scenes. The goal is to do:
     Terrain Flattening > and to Terrain Correction (with an optional resampling).
 
 Created on Mon Jul 18, 2022
-Last updated on: Thu Aug 11, 2022
+Last updated on: Wed Aug 17, 2022
 
 This code is part of the Erli's Ph.D. thesis
 
@@ -36,7 +36,7 @@ from snappy import ProductIO
 #%% READING MULTIPLE PRODUCTS ('.zip') WITH GLOB LOOPING
 
 # Path where Sentinel-1 just got ('.zip') were located:
-inpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\GRD_Level_1'
+inpath = r'C:\Users\GRD_Level_1'
 
 # Only Ground Range Detected images:
 product_type = 'GRD'
@@ -222,7 +222,7 @@ def main(_outpath_):
 #%% DOING PREPROCESSING
 
 # Define your output directory (where the preprocessed scenes shall be saved):
-outpath = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\Preprocessed'
+outpath = r'C:\Users\Preprocessed'
 
 if __name__== "__main__":
     main(outpath)

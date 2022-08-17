@@ -4,7 +4,7 @@
 Code wroten to read and view Sentinel-1 products.
 
 Created on Mon Jul 18, 2022
-Last updated on: Tue Aug 16, 2022
+Last updated on: Wed Aug 17, 2022
 
 This code is part of the Erli's Ph.D. thesis
 
@@ -27,7 +27,7 @@ from snappy import ProductIO
 #%% READING MULTIPLE PRODUCTS ('.zip') WITH GLOB LOOPING
 
 # Path where Sentinel-1 just got ('.zip') were located:
-path = r'I:\Dados_Raster\Projeto_de_pesquisa_Doutorado\Solos_OesteDaBahia\GRD_Level_1'
+path = r'C:\Users\GRD_Level_1'
 
 # Only Ground Range Detected images:
 product_type = 'GRD'
