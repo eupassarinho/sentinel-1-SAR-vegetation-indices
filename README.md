@@ -25,7 +25,7 @@ This code uses asf_search resources to do a geographical search within the ASF S
 
 **WARNING**: to do bulk products download use a Python 3.9 environment. 
 
-![Pipeline_framework-Script_01](https://user-images.githubusercontent.com/52005057/184925308-32fbb954-22cb-41f6-b392-1be074eca7ea.png)
+![Pipeline_framework-Script_01](https://user-images.githubusercontent.com/52005057/185178301-6ff7cb73-33c0-4bd4-961a-5e7deeaad6b4.png)
 
 ### Script 02: reading and visualizing a single product band:
 
@@ -34,22 +34,23 @@ This code uses asf_search resources to do a geographical search within the ASF S
 2) **Install ESA SNAP ToolBox along with Current Updates and Snappy Python on UBUNTU 18.04 for Satellite Imagery Analysis**: https://kaustavmukherjee-66179.medium.com/install-esa-snap-toolbox-along-with-current-updates-and-snappy-python-on-ubuntu-18-04-696a5104e7f
 3) **Configure Python to use the SNAP-Python (snappy) interface**: https://senbox.atlassian.net/wiki/spaces/SNAP/pages/50855941/Configure+Python+to+use+the+SNAP-Python+snappy+interface
 
-![Pipeline_framework-Script_02](https://user-images.githubusercontent.com/52005057/184925460-77f836ca-bff0-4014-a025-773a57fc8862.png)
+![Pipeline_framework-Script_02](https://user-images.githubusercontent.com/52005057/185178373-92cd7128-bf52-4630-ba00-5d809e2d35a9.png)
 
 ### Script 03: preprocessing of Sentinel-1 SAR products (from removing thermal noise to orthorectification):
 
-![Pipeline_framework-Script_03](https://user-images.githubusercontent.com/52005057/184925506-2235258b-a2b9-4a51-b49d-b6f498e1a3ff.png)
+![Pipeline_framework-Script_03](https://user-images.githubusercontent.com/52005057/185178407-ed607a5d-44e9-4623-92c3-3ce314e617e3.png)
 
 ### Script 04: subsetting scenes using an polygon area of interest:
 
 It is an optional script, and was designed to save disc space by subsetting scenes. Skip this step if you're not interested.
-![Pipeline_framework-Script_04](https://user-images.githubusercontent.com/52005057/184925536-4fae038a-588d-4687-94d8-65882407b7f8.png)
+
+![Pipeline_framework-Script_04](https://user-images.githubusercontent.com/52005057/185178462-4566e0c6-6388-48b5-8b8f-27e31f3edba9.png)
 
 ### Script 05: computing SAR dual-pol vegetation indices:
 
 For fast array computations, this script just read BEAM-DIMAP raster products using **snappy** and transform them to **NumPy** arrays, in order to compute the Dual-pol SAR vegetation indices. The indices are: **Cross-Ratio** (**CR**, Frison *et al.* (2018)), **Dual-polarization SAR vegetation index** (**DPSVI**, Periasamy (2018)), the **modified DPSVI** (**DPSVIm**, dos Santos *et al.* (2021)), the **normalized difference polarization index** (**Pol**, Hird *et al.* (2017)), and the **modified Radar Vegetation Index** (**RVIm**, Nasirzadehdizaji *et al.* (2019)).
 
-![Pipeline_framework-Script_05](https://user-images.githubusercontent.com/52005057/184925769-8e3fc9c6-15b4-42bb-8bb8-65cb669a2b34.png)
+![Pipeline_framework-Script_05](https://user-images.githubusercontent.com/52005057/185178500-4f4aa885-84b8-4b5e-8d41-8cc17d8a2594.png)
 
 **References**
 
@@ -69,11 +70,12 @@ After processing raster products, use this script to sample raster bands either 
 
 **WARNING**: it will works properly only using R version >= 4.2.1.
 
-![Pipeline_framework-Script_06](https://user-images.githubusercontent.com/52005057/184925805-9008c05e-25a5-462c-945d-51c30c3fc5ec.png)
+![Pipeline_framework-Script_06](https://user-images.githubusercontent.com/52005057/185178550-4ebabbf6-db22-42a4-bf11-cb85736eadbd.png)
 
 ## Final speech
 
 This code is part of the Erli's Ph.D. thesis and its papers (author: Erli Pinto dos Santos).
 
 Enjoy it, and feel free to contact me anytime.
-Contact-me on: erlipinto@gmail.com or erli.santos@ufv.br
+
+By the way... contact me at: erlipinto@gmail.com or erli.santos@ufv.br
