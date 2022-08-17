@@ -47,7 +47,21 @@ It is an optional script, and was designed to save disc space by subsetting scen
 
 ### Script 05: computing SAR dual-pol vegetation indices:
 
+For fast array computations, this script just read BEAM-DIMAP raster products using **snappy** and transform them to **NumPy** arrays, in order to compute the Dual-pol SAR vegetation indices. The indices are: **Cross-Ratio** (**CR**, Frison *et al.* (2018)), **Dual-polarization SAR vegetation index** (**DPSVI**, Periasamy (2018)), the **modified DPSVI** (**DPSVIm**, dos Santos *et al.* (2021)), the **normalized difference polarization index** (**Pol**, Hird *et al.* (2017)), and the **modified Radar Vegetation Index** (**RVIm**, Nasirzadehdizaji *et al.* (2019)).
+
 ![Pipeline_framework-Script_05](https://user-images.githubusercontent.com/52005057/184925769-8e3fc9c6-15b4-42bb-8bb8-65cb669a2b34.png)
+
+**References**
+
+dos Santos, E. P., da Silva, D. D., & do Amaral, C. H. (2021). Vegetation cover monitoring in tropical regions using SAR-C dual-polarization index: seasonal and spatial influences. International Journal of Remote Sensing, 42(19), 7581–7609. https://doi.org/10.1080/01431161.2021.1959955
+
+Frison, P.-L., Fruneau, B., Kmiha, S., Soudani, K., Dufrêne, E., Toan, T. Le, Koleck, T., Villard, L., Mougin, E., & Rudant, J.-P. (2018). Potential of Sentinel-1 Data for Monitoring Temperate Mixed Forest Phenology. Remote Sensing, 10(12), 2049. https://doi.org/10.3390/rs10122049
+
+Hird, J., DeLancey, E., McDermid, G., & Kariyeva, J. (2017). Google Earth Engine, Open-Access Satellite Data, and Machine Learning in Support of Large-Area Probabilistic Wetland Mapping. Remote Sensing, 9(12), 1315. https://doi.org/10.3390/rs9121315
+
+Nasirzadehdizaji, R., Balik Sanli, F., Abdikan, S., Cakir, Z., Sekertekin, A., & Ustuner, M. (2019). Sensitivity Analysis of Multi-Temporal Sentinel-1 SAR Parameters to Crop Height and Canopy Coverage. Applied Sciences, 9(4), 655. https://doi.org/10.3390/app9040655
+
+Periasamy, S. (2018). Significance of dual polarimetric synthetic aperture radar in biomass retrieval: An attempt on Sentinel-1. Remote Sensing of Environment, 217(September), 537–549. https://doi.org/10.1016/j.rse.2018.09.003
 
 ### Script 06: sampling raster products using R:
 
