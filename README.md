@@ -1,4 +1,4 @@
-#A Python and R blend for processing Sentinel-1 images, getting SAR-based vegetation indices, and sampling raster
+# A Python and R blend for processing Sentinel-1 images, getting SAR-based vegetation indices, and sampling raster
 
 ## Repository intro
 
