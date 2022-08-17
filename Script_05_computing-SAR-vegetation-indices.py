@@ -99,6 +99,53 @@ def do_cr(source, outpath_):
 
     print("Done.")
 
+# Function to compute the DpRVIc (Dual-polarization Radar Vegetation Index,
+# Bhogapurapu et al.(2022)) (data are/must be in linear power units):
+def do_dprvic(source, outpath_):
+    
+    outpath = str(outpath_)
+
+    if not os.path.exists(outpath):
+        os.makedirs(outpath)
+        
+    VH = source.getBand('Gamma0_VH')
+    VV = source.getBand('Gamma0_VV')
+    
+    w = source.getSceneRasterWidth()
+    h = source.getSceneRasterHeight()
+
+    dprvic_product = Product('DPRVIC', 'DPRVIC', w, h)
+    dprvic_band = dpsvi_product.addBand("DPRVIC", ProductData.TYPE_FLOAT32)
+    writer = ProductIO.getProductWriter('BEAM-DIMAP')
+
+    ProductUtils.copyGeoCoding(source, dprvic_product)
+
+    dprvic_product.setProductWriter(writer)
+    dprvic_product.writeHeader(outpath + '\\' + str(source.getName()) + '_DPRVIC.dim')
+
+    VH_i = np.zeros(w, dtype = np.float32)
+    VV_i = np.zeros(w, dtype = np.float32)
+    
+    print("Writing DPRVIC band...")
+    
+    for y in range(h):
+        #print("Processing line ", y, " of ", h)
+        VH_i = VH.readPixels(0, y, w, 1, VH_i)
+        VV_i = VV.readPixels(0, y, w, 1, VV_i)
+        q = np.divide(VH_i,VV_i)
+        dprvic = np.divide(
+            np.multiply(q,q+3),
+            np.multiply(q+1,q+1))
+        
+        dprvic_band.writePixels(0, y, w, 1, dprvic)
+
+    dprvic_product.closeIO()
+    
+    # del VV_max
+    gc.collect()
+    
+    print("Done.")
+
 # Function to compute the DPSVI (Dual-polarization SAR Vegetation Index,
 # Periasamy (2018)) (data are/must be in linear power units):
 def do_dpsvi(source, outpath_):
