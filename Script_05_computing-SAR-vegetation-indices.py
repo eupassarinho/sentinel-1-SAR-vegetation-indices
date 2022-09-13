@@ -5,7 +5,7 @@ Code wroten to compute SAR Vegetation Indices using Sentinel-1 GRD post-
 processed products.
 
 Created on Thu Jul 21, 2022
-Last updated on: Wed Aug 17, 2022
+Last updated on: Tue Sep 13, 2022
 
 This code is part of the Erli's Ph.D. thesis
 
