@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Code wroten to compute SAR Vegetation Indices using Sentinel-1 GRD post-
+Code written to compute SAR Vegetation Indices using Sentinel-1 GRD post-
 processed products.
 Created on Thu Jul 21, 2022
 Last updated on: Tue Sep 13, 2022
-<<<<<<< HEAD
-=======
-
->>>>>>> 646837105bc5136dedabb01919d5beae6672d232
 This code is part of the Erli's Ph.D. thesis
 Author: Erli Pinto dos Santos
 Contact-me on: erlipinto@gmail.com or erli.santos@ufv.br
@@ -434,11 +430,8 @@ def do_sar_vi(_outpath_):
         
         do_cr(product, outpath)
         gc.collect()
-<<<<<<< HEAD
         do_desc(product, outpath)
         gc.collect()
-=======
->>>>>>> 646837105bc5136dedabb01919d5beae6672d232
         do_dprvic(product, outpath)
         gc.collect()
         do_dpsvi(product, outpath)
@@ -457,10 +450,7 @@ def do_merge(source, path_):
     
     cr = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_CR.dim"))
     dprvic = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPRVIC.dim"))
-<<<<<<< HEAD
     desc = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_desc.dim"))
-=======
->>>>>>> 646837105bc5136dedabb01919d5beae6672d232
     dpsvi = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPSVI.dim"))
     dpsvim = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPSVIm.dim"))
     pol =  ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_Pol.dim"))
@@ -468,17 +458,12 @@ def do_merge(source, path_):
  
     parameters = HashMap()
     merged_bands = GPF.createProduct('BandMerge', parameters,
-<<<<<<< HEAD
                                      (cr, dprvic, mc, Hc, thetac, dpsvi, dpsvim, pol, rvim))
-=======
-                                     (cr, dprvic, dpsvi, dpsvim, pol, rvim))
->>>>>>> 646837105bc5136dedabb01919d5beae6672d232
         
     del cr
     gc.collect()
     del dprvic
     gc.collect()
-<<<<<<< HEAD
     del desc
     gc.collect()
     # del mc
@@ -487,8 +472,6 @@ def do_merge(source, path_):
     # gc.collect()
     # del thetac
     # gc.collect()
-=======
->>>>>>> 646837105bc5136dedabb01919d5beae6672d232
     del dpsvi
     gc.collect()
     del dpsvim
