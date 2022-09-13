@@ -96,10 +96,15 @@ for (i in seq(along.with = products_list)) {
   ## Within directory of each processed image, getting a list of its bands:
   product_bands <- list.files(paste0(input_products_path, "/", products_list[i]),
                               pattern = ".img")
+  
   ## Reading and stacking bands within a BEAM-DIMAP directory as a 
   ## Formal SpatRaster dataset (from terra package):
   bands2stack <- rast(paste0(input_products_path, "/", products_list[i], "/",
                              product_bands))
+  
+  # In this case, the 0 values are not valid, so I'm setting 0.0 pixels as NA:
+  NAflag(bands2stack) <- 0
+  
   ## Getting the product name:
 
   product_name <- substr(products_list[i], start = 0, stop = 96)
@@ -113,7 +118,7 @@ for (i in seq(along.with = products_list)) {
       raster2singlePixel <- terra::extract(bands2stack, sampling_points,
                                            method = "simple", ID = TRUE) %>% as_tibble()
       raster2singlePixel <- raster2singlePixel %>%
-        rename_at(vars(dplyr::everything()), function(x) paste0(x,"_pixel"))
+        rename_at(vars(2:(nlyr(bands2stack)+1)), function(x) paste0(x,"_pixel"))
       
       # Buffer sampling ------------------------------------------------------
       ## Return the MEAN of the pixel values inside a given buffer: 
@@ -123,11 +128,11 @@ for (i in seq(along.with = products_list)) {
         
         rast2buffer_mean <- terra::extract(
           bands2stack, points2buffers[[i]],
-          fun = mean, #ID = TRUE,
+          fun = mean, na.rm = TRUE,
           method = "simple", touches = TRUE) %>% as_tibble()
         
         rast2buffer_mean <- rast2buffer_mean %>%
-          rename_at(vars(dplyr::everything()),
+          rename_at(vars(2:(nlyr(bands2stack)+1)),
                     function(x) paste0(x,"_mean_", radius[i], "_m"))
         
         n_buffers4mean[[i]] <- rast2buffer_mean
@@ -144,11 +149,11 @@ for (i in seq(along.with = products_list)) {
         
         rast2buffer_sd <- terra::extract(
           bands2stack, points2buffers[[i]],
-          fun = sd, #ID = TRUE,
+          fun = sd, na.rm = TRUE,
           method = "simple", touches = TRUE) %>% as_tibble()
         
         rast2buffer_sd <- rast2buffer_sd %>%
-          rename_at(vars(dplyr::everything()),
+          rename_at(vars(2:(nlyr(bands2stack)+1)),
                     function(x) paste0(x,"_sd_", radius[i], "_m"))
         
         n_buffers4sd[[i]] <- rast2buffer_sd
@@ -165,11 +170,11 @@ for (i in seq(along.with = products_list)) {
         
         rast2buffer_median <- terra::extract(
           bands2stack, points2buffers[[i]],
-          fun = median, #ID = TRUE,
+          fun = median, na.rm = TRUE,
           method = "simple", touches = TRUE) %>% as_tibble()
         
         rast2buffer_median <- rast2buffer_median %>%
-          rename_at(vars(dplyr::everything()),
+          rename_at(vars(2:(nlyr(bands2stack)+1)),
                     function(x) paste0(x,"_median_", radius[i], "_m"))
         
         n_buffers4median[[i]] <- rast2buffer_median
@@ -186,11 +191,11 @@ for (i in seq(along.with = products_list)) {
         
         rast2buffer_sum <- terra::extract(
           bands2stack, points2buffers[[i]],
-          fun = sum, #ID = TRUE,
+          fun = sum, na.rm = TRUE,
           method = "simple", touches = TRUE) %>% as_tibble()
         
         rast2buffer_sum <- rast2buffer_sum %>%
-          rename_at(vars(dplyr::everything()),
+          rename_at(vars(2:(nlyr(bands2stack)+1)),
                     function(x) paste0(x,"_sum_", radius[i], "_m"))
         
         n_buffers4sum[[i]] <- rast2buffer_sum
@@ -207,11 +212,11 @@ for (i in seq(along.with = products_list)) {
         
         rast2buffer_min <- terra::extract(
           bands2stack, points2buffers[[i]],
-          fun = min, #ID = TRUE,
+          fun = min, na.rm = TRUE,
           method = "simple", touches = TRUE) %>% as_tibble()
         
         rast2buffer_min <- rast2buffer_min %>%
-          rename_at(vars(dplyr::everything()),
+          rename_at(vars(2:(nlyr(bands2stack)+1)),
                     function(x) paste0(x,"_min_", radius[i], "_m"))
         
         n_buffers4min[[i]] <- rast2buffer_min
@@ -228,11 +233,11 @@ for (i in seq(along.with = products_list)) {
         
         rast2buffer_max <- terra::extract(
           bands2stack, points2buffers[[i]],
-          fun = max, #ID = TRUE,
+          fun = max, na.rm = TRUE,
           method = "simple", touches = TRUE) %>% as_tibble()
         
         rast2buffer_max <- rast2buffer_max %>%
-          rename_at(vars(dplyr::everything()),
+          rename_at(vars(2:(nlyr(bands2stack)+1)),
                     function(x) paste0(x,"_max_", radius[i], "_m"))
         
         n_buffers4max[[i]] <- rast2buffer_max
@@ -249,11 +254,11 @@ for (i in seq(along.with = products_list)) {
         
         rast2buffer_var <- terra::extract(
           bands2stack, points2buffers[[i]],
-          fun = var, #ID = TRUE,
+          fun = var, na.rm = TRUE,
           method = "simple", touches = TRUE) %>% as_tibble()
         
         rast2buffer_var <- rast2buffer_var %>%
-          rename_at(vars(dplyr::everything()),
+          rename_at(vars(2:(nlyr(bands2stack)+1)),
                     function(x) paste0(x,"_var_", radius[i], "_m"))
         
         n_buffers4var[[i]] <- rast2buffer_var
@@ -274,14 +279,18 @@ for (i in seq(along.with = products_list)) {
       
       raster2samples <- raster2samples %>% mutate(Sum = apply(
         raster2samples %>% select(contains("_")), 1, FUN = sum)) %>% 
-        filter(Sum != 0) %>% select(-Sum)
+        filter(Sum != 0) %>% select(-Sum) %>% 
+        mutate(Product = product_name) %>% 
+        select(-contains("ID"))
+      
+      print(paste0(nrow(raster2samples), " samples collected!"))
       
     }
   } else {
     
     raster2samples <- terra::extract(bands2stack, sampling_points,
                                      method = "simple") %>% as_tibble()
-    raster2samples <- raster2samples %>% rename_at(vars(dplyr::everything()),
+    raster2samples <- raster2samples %>% rename_at(vars(2:(nlyr(bands2stack)+1)),
                                                    function(x) paste0(x,"_pixel"))
     
     raster2samples <- bind_cols(terra::as.data.frame(sampling_points),
@@ -289,7 +298,11 @@ for (i in seq(along.with = products_list)) {
     
     raster2samples <- raster2samples %>% mutate(Sum = apply(
       raster2samples %>% select(contains("_")), 1, FUN = sum)) %>% 
-      filter(Sum != 0) %>% select(-Sum)
+      filter(Sum != 0) %>% select(-Sum) %>% 
+      mutate(Product = product_name) %>%  
+      select(-contains("ID"))
+    
+    print(paste0(nrow(raster2samples), " samples collected!"))
     
   }
   
@@ -324,3 +337,4 @@ for (i in seq(along.with = products_list)) {
   
   rm(bands2stack, raster2samples, product_bands, product_name)
 }
+                                                   
