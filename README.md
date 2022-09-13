@@ -50,7 +50,7 @@ It is an optional script, and was designed to save disc space by subsetting scen
 
 For fast array computations, this script just read BEAM-DIMAP raster products using **snappy** and transform them to **NumPy** arrays, in order to compute the Dual-pol SAR vegetation indices. The indices are: **Cross-Ratio** (**CR**, Frison *et al.* (2018)), **Dual-polarization SAR vegetation index** (**DPSVI**, Periasamy (2018)), the **modified DPSVI** (**DPSVIm**, dos Santos *et al.* (2021)), the **normalized difference polarization index** (**Pol**, Hird *et al.* (2017)), and the **modified Radar Vegetation Index** (**RVIm**, Nasirzadehdizaji *et al.* (2019)).
 
-![Pipeline_framework-Script_05](https://user-images.githubusercontent.com/52005057/185178500-4f4aa885-84b8-4b5e-8d41-8cc17d8a2594.png)
+![Pipeline_framework-Script_05](https://user-images.githubusercontent.com/52005057/189922775-6b82281b-3360-4760-81c3-2c9a1d21c5b2.png)
 
 **References**
 
