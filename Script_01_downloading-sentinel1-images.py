@@ -101,8 +101,9 @@ footprint = gpd.GeoSeries(shape(results[results_index].geometry))
 
 f, ax = plt.subplots(1)
 gpd.plotting.plot_series(footprint, ax = ax)
-for points in SOC_BahiaWestern['geometry']:
-    gpd.plotting.plot_point_collection(ax, SOC_BahiaWestern['geometry'],
+
+for points in myPandasDF['geometry']:
+    gpd.plotting.plot_point_collection(ax, myPandasDF['geometry'],
                                        facecolor = "darkblue", alpha = 0.3)
 
 #print(f'Granule search example: {results}')

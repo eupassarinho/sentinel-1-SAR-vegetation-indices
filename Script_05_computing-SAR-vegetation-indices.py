@@ -115,7 +115,7 @@ def do_dprvic(source, outpath_):
     h = source.getSceneRasterHeight()
 
     dprvic_product = Product('DPRVIC', 'DPRVIC', w, h)
-    dprvic_band = dpsvi_product.addBand("DPRVIC", ProductData.TYPE_FLOAT32)
+    dprvic_band = dprvic_product.addBand("DPRVIC", ProductData.TYPE_FLOAT32)
     writer = ProductIO.getProductWriter('BEAM-DIMAP')
 
     ProductUtils.copyGeoCoding(source, dprvic_product)
@@ -373,6 +373,8 @@ def do_sar_vi(_outpath_):
         
         do_cr(product, outpath)
         gc.collect()
+        do_dprvic(product, outpath)
+        gc.collect()
         do_dpsvi(product, outpath)
         gc.collect()
         do_dpsvim(product, outpath)
@@ -388,6 +390,7 @@ def do_sar_vi(_outpath_):
 def do_merge(source, path_):
     
     cr = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_CR.dim"))
+    dprvic = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPRVIC.dim"))
     dpsvi = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPSVI.dim"))
     dpsvim = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPSVIm.dim"))
     pol =  ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_Pol.dim"))
@@ -395,20 +398,11 @@ def do_merge(source, path_):
  
     parameters = HashMap()
     merged_bands = GPF.createProduct('BandMerge', parameters,
-                                     (cr, dpsvi, dpsvim, pol, rvim))
-    
-    #cr.dispose()
-    #cr.closeIO()
-    #dpsvi.dispose()
-    #dpsvi.closeIO()
-    #dpsvim.dispose()
-    #dpsvim.closeIO()
-    #pol.dispose()
-    #pol.closeIO()
-    #rvim.dispose()
-    #rvim.closeIO()
-    
+                                     (cr, dprvic, dpsvi, dpsvim, pol, rvim))
+        
     del cr
+    gc.collect()
+    del dprvic
     gc.collect()
     del dpsvi
     gc.collect()
