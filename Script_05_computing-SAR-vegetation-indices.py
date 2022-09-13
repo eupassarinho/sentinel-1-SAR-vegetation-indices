@@ -430,6 +430,8 @@ def do_sar_vi(_outpath_):
         
         do_cr(product, outpath)
         gc.collect()
+        do_desc(product, outpath)
+        gc.collect()
         do_dprvic(product, outpath)
         gc.collect()
         do_dpsvi(product, outpath)
@@ -448,6 +450,7 @@ def do_merge(source, path_):
     
     cr = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_CR.dim"))
     dprvic = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPRVIC.dim"))
+    desc = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_desc.dim"))
     dpsvi = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPSVI.dim"))
     dpsvim = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPSVIm.dim"))
     pol =  ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_Pol.dim"))
@@ -455,12 +458,20 @@ def do_merge(source, path_):
  
     parameters = HashMap()
     merged_bands = GPF.createProduct('BandMerge', parameters,
-                                     (cr, dprvic, dpsvi, dpsvim, pol, rvim))
+                                     (cr, dprvic, mc, Hc, thetac, dpsvi, dpsvim, pol, rvim))
         
     del cr
     gc.collect()
     del dprvic
     gc.collect()
+    del desc
+    gc.collect()
+    # del mc
+    # gc.collect()
+    # del Hc
+    # gc.collect()
+    # del thetac
+    # gc.collect()
     del dpsvi
     gc.collect()
     del dpsvim
