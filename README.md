@@ -56,6 +56,8 @@ For fast array computations, this script just read BEAM-DIMAP raster products us
 
 dos Santos, E. P., da Silva, D. D., & do Amaral, C. H. (2021). Vegetation cover monitoring in tropical regions using SAR-C dual-polarization index: seasonal and spatial influences. International Journal of Remote Sensing, 42(19), 7581–7609. https://doi.org/10.1080/01431161.2021.1959955
 
+Bhogapurapu, N., Dey, S., Mandal, D., Bhattacharya, A., Karthikeyan, L., McNairn, H. and Rao, Y.S., 2022. Soil moisture retrieval over croplands using dual-pol L-band GRD SAR data. Remote Sensing of Environment, 271, p.112900. https://doi.org/10.1016/j.rse.2022.112900
+
 Frison, P.-L., Fruneau, B., Kmiha, S., Soudani, K., Dufrêne, E., Toan, T. Le, Koleck, T., Villard, L., Mougin, E., & Rudant, J.-P. (2018). Potential of Sentinel-1 Data for Monitoring Temperate Mixed Forest Phenology. Remote Sensing, 10(12), 2049. https://doi.org/10.3390/rs10122049
 
 Hird, J., DeLancey, E., McDermid, G., & Kariyeva, J. (2017). Google Earth Engine, Open-Access Satellite Data, and Machine Learning in Support of Large-Area Probabilistic Wetland Mapping. Remote Sensing, 9(12), 1315. https://doi.org/10.3390/rs9121315
