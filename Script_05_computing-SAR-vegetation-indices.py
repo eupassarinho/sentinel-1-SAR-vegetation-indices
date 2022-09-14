@@ -1,17 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-
-Code wroten to compute SAR Vegetation Indices using Sentinel-1 GRD post-
+Code written to compute SAR Vegetation Indices using Sentinel-1 GRD post-
 processed products.
-
 Created on Thu Jul 21, 2022
 Last updated on: Tue Sep 13, 2022
-
 This code is part of the Erli's Ph.D. thesis
-
 Author: Erli Pinto dos Santos
 Contact-me on: erlipinto@gmail.com or erli.santos@ufv.br
-
 """
 
 #%% NECESSARY PACKAGES AND MODULES
@@ -133,6 +128,7 @@ def do_dprvic(source, outpath_):
         VH_i = VH.readPixels(0, y, w, 1, VH_i)
         VV_i = VV.readPixels(0, y, w, 1, VV_i)
         q = np.divide(VH_i,VV_i)
+        q[q>=1]=1
         dprvic = np.divide(
             np.multiply(q,q+3),
             np.multiply(q+1,q+1))
@@ -145,6 +141,67 @@ def do_dprvic(source, outpath_):
     gc.collect()
     
     print("Done.")
+
+
+# Function to compute the dual-pol descriptors (co-pol purity (m_c), pseudo entropy (H_c), pseudo scattering-type (Theta_c)
+# Bhogapurapu et al.(2021)) (data are/must be in linear power units):
+def do_desc(source, outpath_):
+    
+    outpath = str(outpath_)
+
+    if not os.path.exists(outpath):
+        os.makedirs(outpath)
+        
+    VH = source.getBand('Gamma0_VH')
+    VV = source.getBand('Gamma0_VV')
+    
+    w = source.getSceneRasterWidth()
+    h = source.getSceneRasterHeight()
+
+    desc_product = Product('DPRVIC', 'DPRVIC', w, h)
+    mc_band = desc_product.addBand("m_c", ProductData.TYPE_FLOAT32)
+    hc_band = desc_product.addBand("H_c", ProductData.TYPE_FLOAT32)
+    tc_band = desc_product.addBand("Theta_c", ProductData.TYPE_FLOAT32)
+
+
+    writer = ProductIO.getProductWriter('BEAM-DIMAP')
+
+    ProductUtils.copyGeoCoding(source, desc_product)
+
+    desc_product.setProductWriter(writer)
+    desc_product.writeHeader(outpath + '\\' + str(source.getName()) + '_desc.dim')
+
+    VH_i = np.zeros(w, dtype = np.float32)
+    VV_i = np.zeros(w, dtype = np.float32)
+    
+    print("Writing descriptors...")
+    
+    for y in range(h):
+        #print("Processing line ", y, " of ", h)
+        VH_i = VH.readPixels(0, y, w, 1, VH_i)
+        VV_i = VV.readPixels(0, y, w, 1, VV_i)
+        q = np.divide(VH_i,VV_i)
+        q[q>=1]=1
+        mc = np.divide((1-q),(1+q))
+        p1 = np.divide(1,(1+q))
+        p2 = np.divide(q,(1+q))
+        Hc = -1*(np.multiply(p1,np.log2(p1))+np.multiply(p2,np.log2(p2)))
+        thetac = np.arctan(((1-q)**2)/(1-q+q**2)) * (180/np.pi)
+
+        
+        mc_band.writePixels(0, y, w, 1, mc)
+        tc_band.writePixels(0, y, w, 1, Hc)
+        hc_band.writePixels(0, y, w, 1, thetac)
+
+    desc_product.closeIO()
+    
+    # del VV_max
+    gc.collect()
+    
+    print("Done.")
+
+
+
 
 # Function to compute the DPSVI (Dual-polarization SAR Vegetation Index,
 # Periasamy (2018)) (data are/must be in linear power units):
@@ -373,6 +430,8 @@ def do_sar_vi(_outpath_):
         
         do_cr(product, outpath)
         gc.collect()
+        do_desc(product, outpath)
+        gc.collect()
         do_dprvic(product, outpath)
         gc.collect()
         do_dpsvi(product, outpath)
@@ -391,6 +450,7 @@ def do_merge(source, path_):
     
     cr = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_CR.dim"))
     dprvic = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPRVIC.dim"))
+    desc = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_desc.dim"))
     dpsvi = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPSVI.dim"))
     dpsvim = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPSVIm.dim"))
     pol =  ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_Pol.dim"))
@@ -398,12 +458,20 @@ def do_merge(source, path_):
  
     parameters = HashMap()
     merged_bands = GPF.createProduct('BandMerge', parameters,
-                                     (cr, dprvic, dpsvi, dpsvim, pol, rvim))
+                                     (cr, dprvic, mc, Hc, thetac, dpsvi, dpsvim, pol, rvim))
         
     del cr
     gc.collect()
     del dprvic
     gc.collect()
+    del desc
+    gc.collect()
+    # del mc
+    # gc.collect()
+    # del Hc
+    # gc.collect()
+    # del thetac
+    # gc.collect()
     del dpsvi
     gc.collect()
     del dpsvim
