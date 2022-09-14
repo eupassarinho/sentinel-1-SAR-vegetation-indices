@@ -116,7 +116,9 @@ for (i in seq(along.with = products_list)) {
       
       ## Falling pixel sampling:
       raster2singlePixel <- terra::extract(bands2stack, sampling_points,
-                                           method = "simple", ID = TRUE) %>% as_tibble()
+                                           method = "simple", ID = TRUE) %>%
+        as_tibble()
+      
       raster2singlePixel <- raster2singlePixel %>%
         rename_at(vars(2:(nlyr(bands2stack)+1)), function(x) paste0(x,"_pixel"))
       
@@ -281,7 +283,7 @@ for (i in seq(along.with = products_list)) {
         raster2samples %>% select(contains("_")), 1, FUN = sum)) %>% 
         filter(Sum != 0) %>% select(-Sum) %>% 
         mutate(Product = product_name) %>% 
-        select(-contains("ID"))
+        select(-contains("ID.", ignore.case = FALSE))
       
       print(paste0(nrow(raster2samples), " samples collected!"))
       
@@ -300,7 +302,7 @@ for (i in seq(along.with = products_list)) {
       raster2samples %>% select(contains("_")), 1, FUN = sum)) %>% 
       filter(Sum != 0) %>% select(-Sum) %>% 
       mutate(Product = product_name) %>%  
-      select(-contains("ID"))
+      select(-contains("ID.", ignore.case = FALSE))
     
     print(paste0(nrow(raster2samples), " samples collected!"))
     
@@ -337,4 +339,3 @@ for (i in seq(along.with = products_list)) {
   
   rm(bands2stack, raster2samples, product_bands, product_name)
 }
-                                                   
