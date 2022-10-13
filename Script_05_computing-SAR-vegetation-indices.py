@@ -458,7 +458,7 @@ def do_merge(source, path_):
  
     parameters = HashMap()
     merged_bands = GPF.createProduct('BandMerge', parameters,
-                                     (cr, dprvic, mc, Hc, thetac, dpsvi, dpsvim, pol, rvim))
+                                     (cr, dprvic, desc, dpsvi, dpsvim, pol, rvim))
         
     del cr
     gc.collect()
@@ -466,12 +466,6 @@ def do_merge(source, path_):
     gc.collect()
     del desc
     gc.collect()
-    # del mc
-    # gc.collect()
-    # del Hc
-    # gc.collect()
-    # del thetac
-    # gc.collect()
     del dpsvi
     gc.collect()
     del dpsvim
