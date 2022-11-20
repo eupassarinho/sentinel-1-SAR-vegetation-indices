@@ -1,5 +1,7 @@
 # A Python and R blend for processing Sentinel-1 images, getting SAR-based vegetation indices, and sampling raster
 
+[![DOI](https://zenodo.org/badge/522624694.svg)](https://zenodo.org/badge/latestdoi/522624694)
+
 ## Repository intro
 
 The primary purpose of this repo is the need for a pipeline for downloading and preprocessing Sentinel-1 Ground Range Detected (GRD) images, computing Dual-polarization SAR vegetation indices, and sampling (with points coordinates) the processed scenes over a given Area of Interest (AOI). So, you are gonna find here both Spyder and RStudio (IDEs) projects, which means the repo is a blend of Python and R resources, and their scripts to do the above-mentioned steps.
