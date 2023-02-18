@@ -6,13 +6,13 @@
 
 The primary purpose of this repo is the need for a pipeline for downloading and preprocessing Sentinel-1 Ground Range Detected (GRD) images, computing Dual-polarization SAR vegetation indices, and sampling (with points coordinates) the processed scenes over a given Area of Interest (AOI). So, you are gonna find here both Spyder and RStudio (IDEs) projects, which means the repo is a blend of Python and R resources, and their scripts to do the above-mentioned steps.
 
-### The repository, its Spyder and RStudio projects, and its codes were build upon the requirements:
+### The repository, its Spyder and RStudio projects, and its codes were built upon the requirements:
 
-1) To bring both Python and R capabilities of dealing with raster products. The radar products processing is feasible using Python resources, while raster sampling is faster using R resources.
+1) To bring Python and R capabilities to deal with raster products. The radar products processing is feasible using Python resources, while raster sampling is faster using R resources.
 
 2) It uses the packages: **asf_search** (Python 3.9), for downloading satellite products, main radar satellites, from the Alaska Satellite Facility; **snappy** (Python 3.6), the Python implementation of the SeNtinel Application Platform, from the European Space Agency (SNAP-ESA), which contains the Sentinel-1 Toolbox; and the **terra** package (R version 4.2.1), for dealing with raster and vectors fastest than other resources.
 
-3) I tried not to personalize the pipeline, as you can personalize on your way and needs. This means that you are free to change it on your way, e.g., changing Sentinel-1 algorithms, methods, AOI, etc.
+3) I tried not to personalize the pipeline, as you can personalize your way and needs. This means that you are free to change it on your way, e.g., changing Sentinel-1 algorithms, methods, AOI, etc.
 
 4) I advise you to peek rapidly at the below-presented flowcharts, as they mean to summarize what the codes exactly do.
 
@@ -25,7 +25,7 @@ This code uses asf_search resources to do a geographical search within the ASF S
 2) **Bulk Download Sentinel 1 SAR Data**: https://medium.com/geekculture/bulk-download-sentinel-1-sar-data-d180ec0bfac1
 3) (in Portuguese) **Download simultâneo de várias imagens de SAR (como Sentinel-1) via Python**: https://erlipinto.medium.com/download-simult%C3%A2neo-de-v%C3%A1rias-imagens-de-sar-como-sentinel-1-via-python-ba4c89011ccb
 
-**WARNING**: to do bulk products download use a Python 3.9 environment. 
+**WARNING**: To download bulk products, use a Python 3.9 environment. 
 
 ![Pipeline_framework-Script_01](https://user-images.githubusercontent.com/52005057/185178301-6ff7cb73-33c0-4bd4-961a-5e7deeaad6b4.png)
 
@@ -42,15 +42,15 @@ This code uses asf_search resources to do a geographical search within the ASF S
 
 ![Pipeline_framework-Script_03](https://user-images.githubusercontent.com/52005057/185178407-ed607a5d-44e9-4623-92c3-3ce314e617e3.png)
 
-### Script 04: subsetting scenes using an polygon area of interest:
+### Script 04: subsetting scenes using a polygon area of interest:
 
-It is an optional script, and was designed to save disc space by subsetting scenes. Skip this step if you're not interested.
+It is an optional script designed to save disc space by subsetting scenes. Skip this step if you're not interested.
 
 ![Pipeline_framework-Script_04](https://user-images.githubusercontent.com/52005057/185178462-4566e0c6-6388-48b5-8b8f-27e31f3edba9.png)
 
 ### Script 05: computing SAR dual-pol vegetation indices:
 
-For fast array computations, this script just read BEAM-DIMAP raster products using **snappy** and transform them to **NumPy** arrays, in order to compute the Dual-pol SAR vegetation indices. The indices are: **Cross-Ratio** (**CR**, Frison *et al.* (2018)), **Dual-polarization SAR vegetation index** (**DPSVI**, Periasamy (2018)), the **modified DPSVI** (**DPSVIm**, dos Santos *et al.* (2021)), the **normalized difference polarization index** (**Pol**, Hird *et al.* (2017)), and the **modified Radar Vegetation Index** (**RVIm**, Nasirzadehdizaji *et al.* (2019)).
+For fast array computations, this script just read BEAM-DIMAP raster products using **snappy** and transforms them to **NumPy** arrays, in order to compute the Dual-pol SAR vegetation indices. The indices are: **Cross-Ratio** (**CR**, Frison *et al.* (2018)), **Dual-polarization SAR vegetation index** (**DPSVI**, Periasamy (2018)), the **modified DPSVI** (**DPSVIm**, dos Santos *et al.* (2021)), the **normalized difference polarization index** (**Pol**, Hird *et al.* (2017)), and the **modified Radar Vegetation Index** (**RVIm**, Nasirzadehdizaji *et al.* (2019)).
 
 ![Pipeline_framework-Script_05](https://user-images.githubusercontent.com/52005057/189922775-6b82281b-3360-4760-81c3-2c9a1d21c5b2.png)
 
@@ -72,14 +72,12 @@ Periasamy, S. (2018). Significance of dual polarimetric synthetic aperture radar
 
 After processing raster products, use this script to sample raster bands either using coordinates of the points or the coordinates of the points and a set of buffers around them.
 
-**WARNING**: it will works properly only using R version >= 4.2.1.
+**WARNING**: it will work properly only using R version >= 4.2.1.
 
 ![Pipeline_framework-Script_06](https://user-images.githubusercontent.com/52005057/185178550-4ebabbf6-db22-42a4-bf11-cb85736eadbd.png)
 
-## Final speech
+# Referencing
+I receive numerous requests to reproduce this work, and I'm happy to grant them all, I just ask you to attribute the original work to our repository. Check the reference via Zenodo:
+https://doi.org/10.5281/zenodo.7339421
 
-This code is part of the Erli's Ph.D. thesis and its papers (author: Erli Pinto dos Santos).
-
-Enjoy it, and feel free to contact me anytime.
-
-By the way... contact me at: erlipinto@gmail.com or erli.santos@ufv.br
+This code is part of the Erli's Ph.D. thesis and its papers. Enjoy it, and feel free to contact me anytime. You can contact me through: erlipinto@gmail.com or erli.santos@ufv.br
