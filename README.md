@@ -19,14 +19,7 @@ I strongly recommend you to check out what exactly you can do with this reposito
 https://eupassarinho.github.io/sentinel-1-SAR-vegetation-indices/
 
 # Referencing
-I receive numerous requests to reproduce this work, and I'm happy to grant them all, I just ask for the conditions:
-
-Please attribute the original work to our repository. Check the reference via Zenodo:
+I receive numerous requests to reproduce this work, and I'm happy to grant them all, I just ask you to attribute the original work to our repository. Check the reference via Zenodo:
 https://doi.org/10.5281/zenodo.7339421
 
-# Disclaimer
-This code is part of the Erli's Ph.D. thesis and its papers.
-
-Enjoy it, and feel free to contact me anytime.
-
-You can contact me through: erlipinto@gmail.com or erli.santos@ufv.br
+This code is part of the Erli's Ph.D. thesis and its papers. Enjoy it, and feel free to contact me anytime. You can contact me through: erlipinto@gmail.com or erli.santos@ufv.br
