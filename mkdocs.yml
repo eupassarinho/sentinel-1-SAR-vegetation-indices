@@ -1,1 +1,8 @@
-site_name: My Docs
+site_name: Sentinel-1 SAR vegetation indices
+theme:
+  name: material
+  palette:
+    primary: black
+    locale: en
+
+repo_url: https://github.com/eupassarinho/sentinel-1-SAR-vegetation-indices.git

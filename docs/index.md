@@ -1,12 +1,14 @@
-# A Python and R blend for processing Sentinel-1 images, getting SAR-based vegetation indices, and sampling raster
+## A Python and R blend for processing Sentinel-1 images, getting SAR-based vegetation indices, and sampling raster
 
 [![DOI](https://zenodo.org/badge/522624694.svg)](https://zenodo.org/badge/latestdoi/522624694)
+
+Erli Pinto dos Santos
 
 ## Repository intro
 
 The primary purpose of this repo is the need for a pipeline for downloading and preprocessing Sentinel-1 Ground Range Detected (GRD) images, computing Dual-polarization SAR vegetation indices, and sampling (with points coordinates) the processed scenes over a given Area of Interest (AOI). So, you are gonna find here both Spyder and RStudio (IDEs) projects, which means the repo is a blend of Python and R resources, and their scripts to do the above-mentioned steps.
 
-### The repository, its Spyder and RStudio projects, and its codes were built upon the requirements:
+**The repository, its Spyder and RStudio projects, and its codes were built upon the requirements:**
 
 1) To bring Python and R capabilities to deal with raster products. The radar products processing is feasible using Python resources, while raster sampling is faster using R resources.
 
@@ -21,9 +23,11 @@ The primary purpose of this repo is the need for a pipeline for downloading and 
 
 This code uses asf_search resources to do a geographical search within the ASF SAR data catalog, learn more about how its features work in:
 
-1) **asf_search Basics**: https://docs.asf.alaska.edu/asf_search/basics/
-2) **Bulk Download Sentinel 1 SAR Data**: https://medium.com/geekculture/bulk-download-sentinel-1-sar-data-d180ec0bfac1
-3) (in Portuguese) **Download simultâneo de várias imagens de SAR (como Sentinel-1) via Python**: https://erlipinto.medium.com/download-simult%C3%A2neo-de-v%C3%A1rias-imagens-de-sar-como-sentinel-1-via-python-ba4c89011ccb
+1) [asf_search Basics](https://docs.asf.alaska.edu/asf_search/basics/)
+
+2) [Bulk Download Sentinel 1 SAR Data](https://medium.com/geekculture/bulk-download-sentinel-1-sar-data-d180ec0bfac1)
+
+3) (in Portuguese) [Download simultâneo de várias imagens de SAR (como Sentinel-1) via Python](https://erlipinto.medium.com/download-simult%C3%A2neo-de-v%C3%A1rias-imagens-de-sar-como-sentinel-1-via-python-ba4c89011ccb)
 
 **WARNING**: To download bulk products, use a Python 3.9 environment. 
 
@@ -32,9 +36,12 @@ This code uses asf_search resources to do a geographical search within the ASF S
 ### Script 02: reading and visualizing a single product band:
 
 **WARNING**: From here and forward you will need a Python 3.4 or 3.6 environment, it is a SNAP project requirement. Check it out at:
-1) **Getting Started with SNAP Toolbox in Python**: https://towardsdatascience.com/getting-started-with-snap-toolbox-in-python-89e33594fa04
-2) **Install ESA SNAP ToolBox along with Current Updates and Snappy Python on UBUNTU 18.04 for Satellite Imagery Analysis**: https://kaustavmukherjee-66179.medium.com/install-esa-snap-toolbox-along-with-current-updates-and-snappy-python-on-ubuntu-18-04-696a5104e7f
-3) **Configure Python to use the SNAP-Python (snappy) interface**: https://senbox.atlassian.net/wiki/spaces/SNAP/pages/50855941/Configure+Python+to+use+the+SNAP-Python+snappy+interface
+
+1) **Getting Started with SNAP Toolbox in Python**: [https://towardsdatascience.com/getting-started-with-snap-toolbox-in-python-89e33594fa04](https://towardsdatascience.com/getting-started-with-snap-toolbox-in-python-89e33594fa04)
+
+2) **Install ESA SNAP ToolBox along with Current Updates and Snappy Python on UBUNTU 18.04 for Satellite Imagery Analysis**: [https://kaustavmukherjee-66179.medium.com/install-esa-snap-toolbox-along-with-current-updates-and-snappy-python-on-ubuntu-18-04-696a5104e7f](https://kaustavmukherjee-66179.medium.com/install-esa-snap-toolbox-along-with-current-updates-and-snappy-python-on-ubuntu-18-04-696a5104e7f)
+
+3) **Configure Python to use the SNAP-Python (snappy) interface**: [https://senbox.atlassian.net/wiki/spaces/SNAP/pages/50855941/Configure+Python+to+use+the+SNAP-Python+snappy+interface](https://senbox.atlassian.net/wiki/spaces/SNAP/pages/50855941/Configure+Python+to+use+the+SNAP-Python+snappy+interface)
 
 ![Pipeline_framework-Script_02](https://user-images.githubusercontent.com/52005057/185178373-92cd7128-bf52-4630-ba00-5d809e2d35a9.png)
 
@@ -50,23 +57,25 @@ It is an optional script designed to save disc space by subsetting scenes. Skip 
 
 ### Script 05: computing SAR dual-pol vegetation indices:
 
-For fast array computations, this script just read BEAM-DIMAP raster products using **snappy** and transforms them to **NumPy** arrays, in order to compute the Dual-pol SAR vegetation indices. The indices are: **Cross-Ratio** (**CR**, Frison *et al.* (2018)), **Dual-polarization SAR vegetation index** (**DPSVI**, Periasamy (2018)), the **modified DPSVI** (**DPSVIm**, dos Santos *et al.* (2021)), the **normalized difference polarization index** (**Pol**, Hird *et al.* (2017)), and the **modified Radar Vegetation Index** (**RVIm**, Nasirzadehdizaji *et al.* (2019)).
+For fast array computations, this script just read BEAM-DIMAP raster products using **snappy** and transforms them to **NumPy** arrays, in order to compute the Dual-pol SAR vegetation indices. The indices are: **Cross-Ratio** (**CR**, Frison *et al.* (2018)), **Dual-polarization SAR vegetation index** (**DPSVI**, Periasamy (2018)), the **modified DPSVI** (**DPSVIm**, dos Santos *et al.* (2021)), the **normalized difference polarization index** (**Pol**, Hird *et al.* (2017)), the **modified Radar Vegetation Index** (**RVIm**, Nasirzadehdizaji *et al.* (2019)), the dual-polarimetric descriptors for Sentinel-1 (Bhogapurapu et al., 2021), and the Dual-polarization RVI for Sentinel-1 GRD products (**DpRVIc**, (Bhogapurapu et al. (2022)).
 
 ![Pipeline_framework-Script_05](https://user-images.githubusercontent.com/52005057/189922775-6b82281b-3360-4760-81c3-2c9a1d21c5b2.png)
 
 **References**
 
-dos Santos, E. P., da Silva, D. D., & do Amaral, C. H. (2021). Vegetation cover monitoring in tropical regions using SAR-C dual-polarization index: seasonal and spatial influences. International Journal of Remote Sensing, 42(19), 7581–7609. https://doi.org/10.1080/01431161.2021.1959955
+dos Santos, E. P., da Silva, D. D., & do Amaral, C. H. (2021). **Vegetation cover monitoring in tropical regions using SAR-C dual-polarization index: seasonal and spatial influences**. International Journal of Remote Sensing, 42(19), 7581–7609. [https://doi.org/10.1080/01431161.2021.1959955](https://doi.org/10.1080/01431161.2021.1959955)
 
-Bhogapurapu, N., Dey, S., Mandal, D., Bhattacharya, A., Karthikeyan, L., McNairn, H. and Rao, Y.S., 2022. Soil moisture retrieval over croplands using dual-pol L-band GRD SAR data. Remote Sensing of Environment, 271, p.112900. https://doi.org/10.1016/j.rse.2022.112900
+Bhogapurapu, N., Dey, S., Bhattacharya, A., Mandal, D., Lopez-Sanchez, J. M., McNairn, H., López-Martínez, C., & Rao, Y. S. S. (2021). Dual-polarimetric descriptors from Sentinel-1 GRD SAR data for crop growth assessment. ISPRS Journal of Photogrammetry and Remote Sensing, 178, 20–35. [https://doi.org/10.1016/j.isprsjprs.2021.05.013](https://doi.org/10.1016/j.isprsjprs.2021.05.013)
 
-Frison, P.-L., Fruneau, B., Kmiha, S., Soudani, K., Dufrêne, E., Toan, T. Le, Koleck, T., Villard, L., Mougin, E., & Rudant, J.-P. (2018). Potential of Sentinel-1 Data for Monitoring Temperate Mixed Forest Phenology. Remote Sensing, 10(12), 2049. https://doi.org/10.3390/rs10122049
+Bhogapurapu, N., Dey, S., Mandal, D., Bhattacharya, A., Karthikeyan, L., McNairn, H. and Rao, Y.S., 2022. **Soil moisture retrieval over croplands using dual-pol L-band GRD SAR data**. Remote Sensing of Environment, 271, p.112900. [https://doi.org/10.1016/j.rse.2022.112900](https://doi.org/10.1016/j.rse.2022.112900)
 
-Hird, J., DeLancey, E., McDermid, G., & Kariyeva, J. (2017). Google Earth Engine, Open-Access Satellite Data, and Machine Learning in Support of Large-Area Probabilistic Wetland Mapping. Remote Sensing, 9(12), 1315. https://doi.org/10.3390/rs9121315
+Frison, P.-L., Fruneau, B., Kmiha, S., Soudani, K., Dufrêne, E., Toan, T. Le, Koleck, T., Villard, L., Mougin, E., & Rudant, J.-P. (2018). **Potential of Sentinel-1 Data for Monitoring Temperate Mixed Forest Phenology**. Remote Sensing, 10(12), 2049. [https://doi.org/10.3390/rs10122049](https://doi.org/10.3390/rs10122049)
 
-Nasirzadehdizaji, R., Balik Sanli, F., Abdikan, S., Cakir, Z., Sekertekin, A., & Ustuner, M. (2019). Sensitivity Analysis of Multi-Temporal Sentinel-1 SAR Parameters to Crop Height and Canopy Coverage. Applied Sciences, 9(4), 655. https://doi.org/10.3390/app9040655
+Hird, J., DeLancey, E., McDermid, G., & Kariyeva, J. (2017). **Google Earth Engine, Open-Access Satellite Data, and Machine Learning in Support of Large-Area Probabilistic Wetland Mapping**. Remote Sensing, 9(12), 1315. [https://doi.org/10.3390/rs9121315](https://doi.org/10.3390/rs9121315)
 
-Periasamy, S. (2018). Significance of dual polarimetric synthetic aperture radar in biomass retrieval: An attempt on Sentinel-1. Remote Sensing of Environment, 217(September), 537–549. https://doi.org/10.1016/j.rse.2018.09.003
+Nasirzadehdizaji, R., Balik Sanli, F., Abdikan, S., Cakir, Z., Sekertekin, A., & Ustuner, M. (2019). **Sensitivity Analysis of Multi-Temporal Sentinel-1 SAR Parameters to Crop Height and Canopy Coverage**. Applied Sciences, 9(4), 655. [https://doi.org/10.3390/app9040655](https://doi.org/10.3390/app9040655)
+
+Periasamy, S. (2018). **Significance of dual polarimetric synthetic aperture radar in biomass retrieval: An attempt on Sentinel-1**. Remote Sensing of Environment, 217(September), 537–549. [https://doi.org/10.1016/j.rse.2018.09.003](https://doi.org/10.1016/j.rse.2018.09.003)
 
 ### Script 06: sampling raster products using R:
 
@@ -78,6 +87,6 @@ After processing raster products, use this script to sample raster bands either 
 
 # Referencing
 I receive numerous requests to reproduce this work, and I'm happy to grant them all, I just ask you to attribute the original work to our repository. Check the reference via Zenodo:
-https://doi.org/10.5281/zenodo.7339421
+[https://doi.org/10.5281/zenodo.7339421](https://doi.org/10.5281/zenodo.7339421)
 
-This code is part of the Erli's Ph.D. thesis and its papers. Enjoy it, and feel free to contact me anytime. You can contact me through: erlipinto@gmail.com or erli.santos@ufv.br
+This code is part of the Erli's Ph.D. thesis and its papers. Enjoy it, and feel free to contact me anytime. You can contact me through: [erlipinto@gmail.com](erlipinto@gmail.com) or [erli.santos@ufv.br](erli.santos@ufv.br).

@@ -1,204 +1,532 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="None">
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.13">
+    
+    
+      
+        <title>Sentinel-1 SAR vegetation indices</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ffa9267a.min.css">
+      
         
-        
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <title>My Docs</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
-
-        <script src="js/jquery-1.10.2.min.js" defer></script>
-        <script src="js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
-    </head>
-
-    <body class="homepage">
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href=".">My Docs</a>
-
-                <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
+        <link rel="stylesheet" href="assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
 
     
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#a-python-and-r-blend-for-processing-sentinel-1-images-getting-sar-based-vegetation-indices-and-sampling-raster" class="nav-link">A Python and R blend for processing Sentinel-1 images, getting SAR-based vegetation indices, and sampling raster</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#repository-intro" class="nav-link">Repository intro</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#how-does-it-work-and-what-does-it-do" class="nav-link">How does it work and what does it do?</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#final-speech" class="nav-link">Final speech</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
-    </div>
-</div></div>
-                    <div class="col-md-9" role="main">
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
 
-<h1 id="a-python-and-r-blend-for-processing-sentinel-1-images-getting-sar-based-vegetation-indices-and-sampling-raster">A Python and R blend for processing Sentinel-1 images, getting SAR-based vegetation indices, and sampling raster</h1>
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#a-python-and-r-blend-for-processing-sentinel-1-images-getting-sar-based-vegetation-indices-and-sampling-raster" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Sentinel-1 SAR vegetation indices" class="md-header__button md-logo" aria-label="Sentinel-1 SAR vegetation indices" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Sentinel-1 SAR vegetation indices
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/eupassarinho/sentinel-1-SAR-vegetation-indices.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Sentinel-1 SAR vegetation indices" class="md-nav__button md-logo" aria-label="Sentinel-1 SAR vegetation indices" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Sentinel-1 SAR vegetation indices
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/eupassarinho/sentinel-1-SAR-vegetation-indices.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        Home
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-python-and-r-blend-for-processing-sentinel-1-images-getting-sar-based-vegetation-indices-and-sampling-raster" class="md-nav__link">
+    A Python and R blend for processing Sentinel-1 images, getting SAR-based vegetation indices, and sampling raster
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repository-intro" class="md-nav__link">
+    Repository intro
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-it-work-and-what-does-it-do" class="md-nav__link">
+    How does it work and what does it do?
+  </a>
+  
+    <nav class="md-nav" aria-label="How does it work and what does it do?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#script-01-geographical-search-and-batch-download-of-sar-data-in-the-alaska-satellite-facility-asf-dataset" class="md-nav__link">
+    Script 01: geographical search and batch download of SAR data in the Alaska Satellite Facility (ASF) dataset:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-02-reading-and-visualizing-a-single-product-band" class="md-nav__link">
+    Script 02: reading and visualizing a single product band:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-03-preprocessing-of-sentinel-1-sar-products-from-removing-thermal-noise-to-orthorectification" class="md-nav__link">
+    Script 03: preprocessing of Sentinel-1 SAR products (from removing thermal noise to orthorectification):
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-04-subsetting-scenes-using-a-polygon-area-of-interest" class="md-nav__link">
+    Script 04: subsetting scenes using a polygon area of interest:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-05-computing-sar-dual-pol-vegetation-indices" class="md-nav__link">
+    Script 05: computing SAR dual-pol vegetation indices:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-06-sampling-raster-products-using-r" class="md-nav__link">
+    Script 06: sampling raster products using R:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencing" class="md-nav__link">
+    Referencing
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-python-and-r-blend-for-processing-sentinel-1-images-getting-sar-based-vegetation-indices-and-sampling-raster" class="md-nav__link">
+    A Python and R blend for processing Sentinel-1 images, getting SAR-based vegetation indices, and sampling raster
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repository-intro" class="md-nav__link">
+    Repository intro
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-it-work-and-what-does-it-do" class="md-nav__link">
+    How does it work and what does it do?
+  </a>
+  
+    <nav class="md-nav" aria-label="How does it work and what does it do?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#script-01-geographical-search-and-batch-download-of-sar-data-in-the-alaska-satellite-facility-asf-dataset" class="md-nav__link">
+    Script 01: geographical search and batch download of SAR data in the Alaska Satellite Facility (ASF) dataset:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-02-reading-and-visualizing-a-single-product-band" class="md-nav__link">
+    Script 02: reading and visualizing a single product band:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-03-preprocessing-of-sentinel-1-sar-products-from-removing-thermal-noise-to-orthorectification" class="md-nav__link">
+    Script 03: preprocessing of Sentinel-1 SAR products (from removing thermal noise to orthorectification):
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-04-subsetting-scenes-using-a-polygon-area-of-interest" class="md-nav__link">
+    Script 04: subsetting scenes using a polygon area of interest:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-05-computing-sar-dual-pol-vegetation-indices" class="md-nav__link">
+    Script 05: computing SAR dual-pol vegetation indices:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-06-sampling-raster-products-using-r" class="md-nav__link">
+    Script 06: sampling raster products using R:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencing" class="md-nav__link">
+    Referencing
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h2 id="a-python-and-r-blend-for-processing-sentinel-1-images-getting-sar-based-vegetation-indices-and-sampling-raster">A Python and R blend for processing Sentinel-1 images, getting SAR-based vegetation indices, and sampling raster</h2>
 <p><a href="https://zenodo.org/badge/latestdoi/522624694"><img alt="DOI" src="https://zenodo.org/badge/522624694.svg" /></a></p>
+<p>Erli Pinto dos Santos</p>
 <h2 id="repository-intro">Repository intro</h2>
 <p>The primary purpose of this repo is the need for a pipeline for downloading and preprocessing Sentinel-1 Ground Range Detected (GRD) images, computing Dual-polarization SAR vegetation indices, and sampling (with points coordinates) the processed scenes over a given Area of Interest (AOI). So, you are gonna find here both Spyder and RStudio (IDEs) projects, which means the repo is a blend of Python and R resources, and their scripts to do the above-mentioned steps.</p>
-<h3 id="the-repository-its-spyder-and-rstudio-projects-and-its-codes-were-build-upon-the-requirements">The repository, its Spyder and RStudio projects, and its codes were build upon the requirements:</h3>
-<p>1) To bring both Python and R capabilities of dealing with raster products. The radar products processing is feasible using Python resources, while raster sampling is faster using R resources.</p>
+<p><strong>The repository, its Spyder and RStudio projects, and its codes were built upon the requirements:</strong></p>
+<p>1) To bring Python and R capabilities to deal with raster products. The radar products processing is feasible using Python resources, while raster sampling is faster using R resources.</p>
 <p>2) It uses the packages: <strong>asf_search</strong> (Python 3.9), for downloading satellite products, main radar satellites, from the Alaska Satellite Facility; <strong>snappy</strong> (Python 3.6), the Python implementation of the SeNtinel Application Platform, from the European Space Agency (SNAP-ESA), which contains the Sentinel-1 Toolbox; and the <strong>terra</strong> package (R version 4.2.1), for dealing with raster and vectors fastest than other resources.</p>
-<p>3) I tried not to personalize the pipeline, as you can personalize on your way and needs. This means that you are free to change it on your way, e.g., changing Sentinel-1 algorithms, methods, AOI, etc.</p>
+<p>3) I tried not to personalize the pipeline, as you can personalize your way and needs. This means that you are free to change it on your way, e.g., changing Sentinel-1 algorithms, methods, AOI, etc.</p>
 <p>4) I advise you to peek rapidly at the below-presented flowcharts, as they mean to summarize what the codes exactly do.</p>
 <h1 id="how-does-it-work-and-what-does-it-do">How does it work and what does it do?</h1>
 <h3 id="script-01-geographical-search-and-batch-download-of-sar-data-in-the-alaska-satellite-facility-asf-dataset">Script 01: geographical search and batch download of SAR data in the Alaska Satellite Facility (ASF) dataset:</h3>
 <p>This code uses asf_search resources to do a geographical search within the ASF SAR data catalog, learn more about how its features work in:</p>
-<p>1) <strong>asf_search Basics</strong>: https://docs.asf.alaska.edu/asf_search/basics/
-2) <strong>Bulk Download Sentinel 1 SAR Data</strong>: https://medium.com/geekculture/bulk-download-sentinel-1-sar-data-d180ec0bfac1
-3) (in Portuguese) <strong>Download simultâneo de várias imagens de SAR (como Sentinel-1) via Python</strong>: https://erlipinto.medium.com/download-simult%C3%A2neo-de-v%C3%A1rias-imagens-de-sar-como-sentinel-1-via-python-ba4c89011ccb</p>
-<p><strong>WARNING</strong>: to do bulk products download use a Python 3.9 environment. </p>
+<p>1) <a href="https://docs.asf.alaska.edu/asf_search/basics/">asf_search Basics</a></p>
+<p>2) <a href="https://medium.com/geekculture/bulk-download-sentinel-1-sar-data-d180ec0bfac1">Bulk Download Sentinel 1 SAR Data</a></p>
+<p>3) (in Portuguese) <a href="https://erlipinto.medium.com/download-simult%C3%A2neo-de-v%C3%A1rias-imagens-de-sar-como-sentinel-1-via-python-ba4c89011ccb">Download simultâneo de várias imagens de SAR (como Sentinel-1) via Python</a></p>
+<p><strong>WARNING</strong>: To download bulk products, use a Python 3.9 environment. </p>
 <p><img alt="Pipeline_framework-Script_01" src="https://user-images.githubusercontent.com/52005057/185178301-6ff7cb73-33c0-4bd4-961a-5e7deeaad6b4.png" /></p>
 <h3 id="script-02-reading-and-visualizing-a-single-product-band">Script 02: reading and visualizing a single product band:</h3>
-<p><strong>WARNING</strong>: From here and forward you will need a Python 3.4 or 3.6 environment, it is a SNAP project requirement. Check it out at:
-1) <strong>Getting Started with SNAP Toolbox in Python</strong>: https://towardsdatascience.com/getting-started-with-snap-toolbox-in-python-89e33594fa04
-2) <strong>Install ESA SNAP ToolBox along with Current Updates and Snappy Python on UBUNTU 18.04 for Satellite Imagery Analysis</strong>: https://kaustavmukherjee-66179.medium.com/install-esa-snap-toolbox-along-with-current-updates-and-snappy-python-on-ubuntu-18-04-696a5104e7f
-3) <strong>Configure Python to use the SNAP-Python (snappy) interface</strong>: https://senbox.atlassian.net/wiki/spaces/SNAP/pages/50855941/Configure+Python+to+use+the+SNAP-Python+snappy+interface</p>
+<p><strong>WARNING</strong>: From here and forward you will need a Python 3.4 or 3.6 environment, it is a SNAP project requirement. Check it out at:</p>
+<p>1) <strong>Getting Started with SNAP Toolbox in Python</strong>: <a href="https://towardsdatascience.com/getting-started-with-snap-toolbox-in-python-89e33594fa04">https://towardsdatascience.com/getting-started-with-snap-toolbox-in-python-89e33594fa04</a></p>
+<p>2) <strong>Install ESA SNAP ToolBox along with Current Updates and Snappy Python on UBUNTU 18.04 for Satellite Imagery Analysis</strong>: <a href="https://kaustavmukherjee-66179.medium.com/install-esa-snap-toolbox-along-with-current-updates-and-snappy-python-on-ubuntu-18-04-696a5104e7f">https://kaustavmukherjee-66179.medium.com/install-esa-snap-toolbox-along-with-current-updates-and-snappy-python-on-ubuntu-18-04-696a5104e7f</a></p>
+<p>3) <strong>Configure Python to use the SNAP-Python (snappy) interface</strong>: <a href="https://senbox.atlassian.net/wiki/spaces/SNAP/pages/50855941/Configure+Python+to+use+the+SNAP-Python+snappy+interface">https://senbox.atlassian.net/wiki/spaces/SNAP/pages/50855941/Configure+Python+to+use+the+SNAP-Python+snappy+interface</a></p>
 <p><img alt="Pipeline_framework-Script_02" src="https://user-images.githubusercontent.com/52005057/185178373-92cd7128-bf52-4630-ba00-5d809e2d35a9.png" /></p>
 <h3 id="script-03-preprocessing-of-sentinel-1-sar-products-from-removing-thermal-noise-to-orthorectification">Script 03: preprocessing of Sentinel-1 SAR products (from removing thermal noise to orthorectification):</h3>
 <p><img alt="Pipeline_framework-Script_03" src="https://user-images.githubusercontent.com/52005057/185178407-ed607a5d-44e9-4623-92c3-3ce314e617e3.png" /></p>
-<h3 id="script-04-subsetting-scenes-using-an-polygon-area-of-interest">Script 04: subsetting scenes using an polygon area of interest:</h3>
-<p>It is an optional script, and was designed to save disc space by subsetting scenes. Skip this step if you're not interested.</p>
+<h3 id="script-04-subsetting-scenes-using-a-polygon-area-of-interest">Script 04: subsetting scenes using a polygon area of interest:</h3>
+<p>It is an optional script designed to save disc space by subsetting scenes. Skip this step if you're not interested.</p>
 <p><img alt="Pipeline_framework-Script_04" src="https://user-images.githubusercontent.com/52005057/185178462-4566e0c6-6388-48b5-8b8f-27e31f3edba9.png" /></p>
 <h3 id="script-05-computing-sar-dual-pol-vegetation-indices">Script 05: computing SAR dual-pol vegetation indices:</h3>
-<p>For fast array computations, this script just read BEAM-DIMAP raster products using <strong>snappy</strong> and transform them to <strong>NumPy</strong> arrays, in order to compute the Dual-pol SAR vegetation indices. The indices are: <strong>Cross-Ratio</strong> (<strong>CR</strong>, Frison <em>et al.</em> (2018)), <strong>Dual-polarization SAR vegetation index</strong> (<strong>DPSVI</strong>, Periasamy (2018)), the <strong>modified DPSVI</strong> (<strong>DPSVIm</strong>, dos Santos <em>et al.</em> (2021)), the <strong>normalized difference polarization index</strong> (<strong>Pol</strong>, Hird <em>et al.</em> (2017)), and the <strong>modified Radar Vegetation Index</strong> (<strong>RVIm</strong>, Nasirzadehdizaji <em>et al.</em> (2019)).</p>
+<p>For fast array computations, this script just read BEAM-DIMAP raster products using <strong>snappy</strong> and transforms them to <strong>NumPy</strong> arrays, in order to compute the Dual-pol SAR vegetation indices. The indices are: <strong>Cross-Ratio</strong> (<strong>CR</strong>, Frison <em>et al.</em> (2018)), <strong>Dual-polarization SAR vegetation index</strong> (<strong>DPSVI</strong>, Periasamy (2018)), the <strong>modified DPSVI</strong> (<strong>DPSVIm</strong>, dos Santos <em>et al.</em> (2021)), the <strong>normalized difference polarization index</strong> (<strong>Pol</strong>, Hird <em>et al.</em> (2017)), the <strong>modified Radar Vegetation Index</strong> (<strong>RVIm</strong>, Nasirzadehdizaji <em>et al.</em> (2019)), the dual-polarimetric descriptors for Sentinel-1 (Bhogapurapu et al., 2021), and the Dual-polarization RVI for Sentinel-1 GRD products (<strong>DpRVIc</strong>, (Bhogapurapu et al. (2022)).</p>
 <p><img alt="Pipeline_framework-Script_05" src="https://user-images.githubusercontent.com/52005057/189922775-6b82281b-3360-4760-81c3-2c9a1d21c5b2.png" /></p>
 <p><strong>References</strong></p>
-<p>dos Santos, E. P., da Silva, D. D., &amp; do Amaral, C. H. (2021). Vegetation cover monitoring in tropical regions using SAR-C dual-polarization index: seasonal and spatial influences. International Journal of Remote Sensing, 42(19), 7581–7609. https://doi.org/10.1080/01431161.2021.1959955</p>
-<p>Bhogapurapu, N., Dey, S., Mandal, D., Bhattacharya, A., Karthikeyan, L., McNairn, H. and Rao, Y.S., 2022. Soil moisture retrieval over croplands using dual-pol L-band GRD SAR data. Remote Sensing of Environment, 271, p.112900. https://doi.org/10.1016/j.rse.2022.112900</p>
-<p>Frison, P.-L., Fruneau, B., Kmiha, S., Soudani, K., Dufrêne, E., Toan, T. Le, Koleck, T., Villard, L., Mougin, E., &amp; Rudant, J.-P. (2018). Potential of Sentinel-1 Data for Monitoring Temperate Mixed Forest Phenology. Remote Sensing, 10(12), 2049. https://doi.org/10.3390/rs10122049</p>
-<p>Hird, J., DeLancey, E., McDermid, G., &amp; Kariyeva, J. (2017). Google Earth Engine, Open-Access Satellite Data, and Machine Learning in Support of Large-Area Probabilistic Wetland Mapping. Remote Sensing, 9(12), 1315. https://doi.org/10.3390/rs9121315</p>
-<p>Nasirzadehdizaji, R., Balik Sanli, F., Abdikan, S., Cakir, Z., Sekertekin, A., &amp; Ustuner, M. (2019). Sensitivity Analysis of Multi-Temporal Sentinel-1 SAR Parameters to Crop Height and Canopy Coverage. Applied Sciences, 9(4), 655. https://doi.org/10.3390/app9040655</p>
-<p>Periasamy, S. (2018). Significance of dual polarimetric synthetic aperture radar in biomass retrieval: An attempt on Sentinel-1. Remote Sensing of Environment, 217(September), 537–549. https://doi.org/10.1016/j.rse.2018.09.003</p>
+<p>dos Santos, E. P., da Silva, D. D., &amp; do Amaral, C. H. (2021). <strong>Vegetation cover monitoring in tropical regions using SAR-C dual-polarization index: seasonal and spatial influences</strong>. International Journal of Remote Sensing, 42(19), 7581–7609. <a href="https://doi.org/10.1080/01431161.2021.1959955">https://doi.org/10.1080/01431161.2021.1959955</a></p>
+<p>Bhogapurapu, N., Dey, S., Bhattacharya, A., Mandal, D., Lopez-Sanchez, J. M., McNairn, H., López-Martínez, C., &amp; Rao, Y. S. S. (2021). Dual-polarimetric descriptors from Sentinel-1 GRD SAR data for crop growth assessment. ISPRS Journal of Photogrammetry and Remote Sensing, 178, 20–35. <a href="https://doi.org/10.1016/j.isprsjprs.2021.05.013">https://doi.org/10.1016/j.isprsjprs.2021.05.013</a></p>
+<p>Bhogapurapu, N., Dey, S., Mandal, D., Bhattacharya, A., Karthikeyan, L., McNairn, H. and Rao, Y.S., 2022. <strong>Soil moisture retrieval over croplands using dual-pol L-band GRD SAR data</strong>. Remote Sensing of Environment, 271, p.112900. <a href="https://doi.org/10.1016/j.rse.2022.112900">https://doi.org/10.1016/j.rse.2022.112900</a></p>
+<p>Frison, P.-L., Fruneau, B., Kmiha, S., Soudani, K., Dufrêne, E., Toan, T. Le, Koleck, T., Villard, L., Mougin, E., &amp; Rudant, J.-P. (2018). <strong>Potential of Sentinel-1 Data for Monitoring Temperate Mixed Forest Phenology</strong>. Remote Sensing, 10(12), 2049. <a href="https://doi.org/10.3390/rs10122049">https://doi.org/10.3390/rs10122049</a></p>
+<p>Hird, J., DeLancey, E., McDermid, G., &amp; Kariyeva, J. (2017). <strong>Google Earth Engine, Open-Access Satellite Data, and Machine Learning in Support of Large-Area Probabilistic Wetland Mapping</strong>. Remote Sensing, 9(12), 1315. <a href="https://doi.org/10.3390/rs9121315">https://doi.org/10.3390/rs9121315</a></p>
+<p>Nasirzadehdizaji, R., Balik Sanli, F., Abdikan, S., Cakir, Z., Sekertekin, A., &amp; Ustuner, M. (2019). <strong>Sensitivity Analysis of Multi-Temporal Sentinel-1 SAR Parameters to Crop Height and Canopy Coverage</strong>. Applied Sciences, 9(4), 655. <a href="https://doi.org/10.3390/app9040655">https://doi.org/10.3390/app9040655</a></p>
+<p>Periasamy, S. (2018). <strong>Significance of dual polarimetric synthetic aperture radar in biomass retrieval: An attempt on Sentinel-1</strong>. Remote Sensing of Environment, 217(September), 537–549. <a href="https://doi.org/10.1016/j.rse.2018.09.003">https://doi.org/10.1016/j.rse.2018.09.003</a></p>
 <h3 id="script-06-sampling-raster-products-using-r">Script 06: sampling raster products using R:</h3>
 <p>After processing raster products, use this script to sample raster bands either using coordinates of the points or the coordinates of the points and a set of buffers around them.</p>
-<p><strong>WARNING</strong>: it will works properly only using R version &gt;= 4.2.1.</p>
+<p><strong>WARNING</strong>: it will work properly only using R version &gt;= 4.2.1.</p>
 <p><img alt="Pipeline_framework-Script_06" src="https://user-images.githubusercontent.com/52005057/185178550-4ebabbf6-db22-42a4-bf11-cb85736eadbd.png" /></p>
-<h2 id="final-speech">Final speech</h2>
-<p>This code is part of the Erli's Ph.D. thesis and its papers (author: Erli Pinto dos Santos).</p>
-<p>Enjoy it, and feel free to contact me anytime.</p>
-<p>By the way... contact me at: erlipinto@gmail.com or erli.santos@ufv.br</p></div>
-            </div>
-        </div>
+<h1 id="referencing">Referencing</h1>
+<p>I receive numerous requests to reproduce this work, and I'm happy to grant them all, I just ask you to attribute the original work to our repository. Check the reference via Zenodo:
+<a href="https://doi.org/10.5281/zenodo.7339421">https://doi.org/10.5281/zenodo.7339421</a></p>
+<p>This code is part of the Erli's Ph.D. thesis and its papers. Enjoy it, and feel free to contact me anytime. You can contact me through: <a href="erlipinto@gmail.com">erlipinto@gmail.com</a> or <a href="erli.santos@ufv.br">erli.santos@ufv.br</a>.</p>
 
-        <footer class="col-md-12">
-            <hr>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>
-            var base_url = ".",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
-        </script>
-        <script src="js/base.js" defer></script>
-        <script src="search/main.js" defer></script>
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+
+
+                
+              </article>
             </div>
-            <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
-                <form>
-                    <div class="form-group">
-                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
+          
+          
         </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
 </div>
-
-    </body>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.2a6f1dda.min.js"></script>
+      
+    
+  </body>
 </html>
-
-<!--
-MkDocs version : 1.4.2
-Build Date UTC : 2023-02-18 14:38:58.523836+00:00
--->
