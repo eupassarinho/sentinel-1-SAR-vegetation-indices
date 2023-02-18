@@ -7,7 +7,7 @@ Code wroten to perform pre-processing of Sentinel-1 scenes. The goal is to do:
     Terrain Flattening > and to Terrain Correction (with an optional resampling).
 
 Created on Mon Jul 18, 2022
-Last updated on: Wed Aug 17, 2022
+Last updated on: Sat Feb 18, 2023
 
 This code is part of the Erli's Ph.D. thesis
 
