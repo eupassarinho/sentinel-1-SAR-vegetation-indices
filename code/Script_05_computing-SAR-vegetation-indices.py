@@ -200,18 +200,27 @@ def do_desc(source, outpath_):
     
     print("Done.")
 
-
-
+def which_vv_to_use():
+    
+    if (type(vv_max_param) == int) or (type(vv_max_param) == float):
+        print("But the code is using VV max by analyst = ", vv_max_param)
+        del VV_max
+        gc.collect()
+        return float(vv_max_param)
+        
+    else:
+        print("and the code is employing it.")
+        return float(VV_max)
 
 # Function to compute the DPSVI (Dual-polarization SAR Vegetation Index,
 # Periasamy (2018)) (data are/must be in linear power units):
-def do_dpsvi(source, outpath_):
+def do_dpsvi(source, outpath_, vv_max_param = "null"):
     
     outpath = str(outpath_)
 
     if not os.path.exists(outpath):
         os.makedirs(outpath)
-        
+    
     VH = source.getBand('Gamma0_VH')
     VV = source.getBand('Gamma0_VV')
     
@@ -234,7 +243,7 @@ def do_dpsvi(source, outpath_):
     VV_get = np.zeros((w, h), dtype = np.float32)
     VV_get = VV.readPixels(0, 0, w-1, h-1, VV_get)
     VV_max = np.nanmax(VV_get)
-    print("Max non-NaN in VV band: ", VV_max)
+    print("Max non-NaN in VV band: ", VV_max, "...")
     
     del VV_get
     gc.collect()
@@ -249,7 +258,7 @@ def do_dpsvi(source, outpath_):
         dpsvi = np.multiply(
             np.multiply(
                 # IDPDD:
-                np.divide(np.add(np.subtract(VV_max, VV_i), VH_i), np.sqrt(2)),
+                np.divide(np.add(np.subtract(which_vv_to_use(), VV_i), VH_i), np.sqrt(2)),
                 # VDDPI
                 np.divide(np.add(VV_i, VH_i), VV_i)),
                 # VH band

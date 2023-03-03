@@ -36,7 +36,7 @@ from snappy import ProductIO
 #%% READING MULTIPLE PRODUCTS ('.zip') WITH GLOB LOOPING
 
 # Path where Sentinel-1 just got ('.zip') were located:
-inpath = r'C:\Users\GRD_Level_1'
+inpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\Dados_Isabel_Erli\GRD_Level_1'
 
 # Only Ground Range Detected images:
 product_type = 'GRD'
@@ -103,9 +103,10 @@ def do_calibration(source, polarization, pols):
 def do_speckle_filtering(source):
     print('\tSpeckle filtering...')
     parameters = HashMap()
-    parameters.put('filter', 'Lee')
-    parameters.put('filterSizeX', 5)
-    parameters.put('filterSizeY', 5)
+    parameters.put('filter', 'Lee Sigma')
+    parameters.put('Sigma', 0.9)
+    parameters.put('filterSizeX', 11)
+    parameters.put('filterSizeY', 11)
     output = GPF.createProduct('Speckle-Filter', parameters, source)
     return output
 
@@ -114,6 +115,7 @@ def do_radiometric_terrain_flattening(source):
     parameters = HashMap()
     parameters.put('demName', 'SRTM 1Sec HGT')
     parameters.put('imgResamplingMethod', 'BILINEAR_INTERPOLATION')
+    parameters.put('oversamplingMultiple', 4.0)
     output = GPF.createProduct('Terrain-Flattening', parameters, source)
     return output
 
@@ -123,8 +125,9 @@ def do_terrain_correction(source, proj, downsample):
     parameters.put('demName', 'SRTM 1Sec HGT')
     parameters.put('demResamplingMethod', 'BILINEAR_INTERPOLATION')
     # comment the following line if no need to convert to UTM/WGS84 (default is WGS84)
-    parameters.put('mapProjection', proj)       
-    parameters.put('saveProjectedLocalIncidenceAngle', True)
+    parameters.put('mapProjection', proj)
+    parameters.put('saveIncidenceAngleFromEllipsoid', False)
+    parameters.put('saveProjectedLocalIncidenceAngle', False)
     parameters.put('saveSelectedSourceBand', True)
     # downsample: 1 -- need downsample to 40m, 0 -- no need to downsample
     while downsample == 1:   
@@ -222,7 +225,7 @@ def main(_outpath_):
 #%% DOING PREPROCESSING
 
 # Define your output directory (where the preprocessed scenes shall be saved):
-outpath = r'C:\Users\Preprocessed'
+outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\Dados_Isabel_Erli\GRD_Level_1_Preprocessed'
 
 if __name__== "__main__":
     main(outpath)
