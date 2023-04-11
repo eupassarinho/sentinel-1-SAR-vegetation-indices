@@ -3,7 +3,7 @@
 Code written to compute SAR Vegetation Indices using Sentinel-1 GRD post-
 processed products.
 Created on Thu Jul 21, 2022
-Last updated on: Tue Sep 13, 2022
+Last updated on: Tue Apr 11, 2023
 This code is part of the Erli's Ph.D. thesis
 Author: Erli Pinto dos Santos
 Contact-me on: erlipinto@gmail.com or erli.santos@ufv.br
@@ -200,20 +200,9 @@ def do_desc(source, outpath_):
     
     print("Done.")
 
-def which_vv_to_use():
-    
-    if (type(vv_max_param) == int) or (type(vv_max_param) == float):
-        print("But the code is using VV max by analyst = ", vv_max_param)
-        del VV_max
-        gc.collect()
-        return float(vv_max_param)
-        
-    else:
-        print("and the code is employing it.")
-        return float(VV_max)
-
 # Function to compute the DPSVI (Dual-polarization SAR Vegetation Index,
 # Periasamy (2018)) (data are/must be in linear power units):
+    
 def do_dpsvi(source, outpath_, vv_max_param = "null"):
     
     outpath = str(outpath_)
@@ -245,6 +234,13 @@ def do_dpsvi(source, outpath_, vv_max_param = "null"):
     VV_max = np.nanmax(VV_get)
     print("Max non-NaN in VV band: ", VV_max, "...")
     
+    if (type(vv_max_param) == int) or (type(vv_max_param) == float):
+        VV_max = float(vv_max_param)
+        print("But the code is using VV max by analyst = ", VV_max)
+    else:
+        print("and the code is employing it.")
+        return float(VV_max)
+    
     del VV_get
     gc.collect()
     
@@ -258,7 +254,7 @@ def do_dpsvi(source, outpath_, vv_max_param = "null"):
         dpsvi = np.multiply(
             np.multiply(
                 # IDPDD:
-                np.divide(np.add(np.subtract(which_vv_to_use(), VV_i), VH_i), np.sqrt(2)),
+                np.divide(np.add(np.subtract(VV_max, VV_i), VH_i), np.sqrt(2)),
                 # VDDPI
                 np.divide(np.add(VV_i, VH_i), VV_i)),
                 # VH band
@@ -443,7 +439,7 @@ def do_sar_vi(_outpath_):
         gc.collect()
         do_dprvic(product, outpath)
         gc.collect()
-        do_dpsvi(product, outpath)
+        do_dpsvi(product, outpath, vv_max_param = 1.5)
         gc.collect()
         do_dpsvim(product, outpath)
         gc.collect()
@@ -544,6 +540,7 @@ def do_merge_and_write(_sar_vi_path_, _outpath_):
 
 # Directory path where the program will store SAR vegetation indices files:
 sar_vi_path = r'C:\Users\TemporaryBands'
+
 # Directory where the program will store merge Sentinel-1 GRD original scenes
 # and its derived SAR Vegetation Indices:
 outpath = r'C:\Users\GRD_Processed'
@@ -557,8 +554,7 @@ gc.collect()
 #%% REMOVING JUNKERIE
 
 # As the Dual-pol SAR were compute and merge with its original product, the
-# temporary folder can be deleted, in order to save disk space:
-shutil.rmtree(str(sar_vi_path))
+# temporary folder can be deleted, in order to save disk space. Please
+# uncomment the following line:
+#shutil.rmtree(str(sar_vi_path), ignore_errors = True)
 
-# As well as the cropped products, once we have merged all of them:
-shutil.rmtree(inpath)

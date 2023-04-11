@@ -29,10 +29,10 @@ def listParams(operator_name):
     for param in param_Desc:
         print(param.getName(), "or", param.getAlias())
 
-listParams('Terrain-Correction')
+#listParams('Terrain-Flattening')
 
 import subprocess
 
-print(subprocess.Popen(['gpt', '-h', 'Terrain-Correction'],
+print(subprocess.Popen(['gpt', '-h', 'Terrain-Flattening'],
                        stdout = subprocess.PIPE,
                        universal_newlines = True).communicate()[0])

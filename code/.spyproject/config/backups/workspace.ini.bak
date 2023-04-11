@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['Script_03_preprocessing-sentinel1-GRD-scenes.py', 'check-snappy-funcions-and-parameters.py', '..\\..\\..\\..\\..\\..\\.spyder-py3\\autosave\\check-snappy-funcions-and-parameters.py']
+recent_files = ['Script_01_downloading-sentinel1-images.py', 'Script_02_reading-and-visualizing-scenes.py', 'Script_03_preprocessing-sentinel1-GRD-scenes.py', 'Script_04_cropping-sentinel1-GRD-scenes.py', 'Script_05_computing-SAR-vegetation-indices.py']
 
 [main]
 version = 0.2.0
