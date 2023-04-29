@@ -41,8 +41,7 @@ from snappy import ProductIO, WKTReader
 #%% READING MULTIPLE PRODUCTS ('.dim') WITH GLOB LOOPING
 
 # Path where Sentinel-1 preprocessed images ('.dim') were located:
-inpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\2023_03_08-Dados_Isabel_Erli\GRD_Level_1'
-#r'C:\Users\Preprocessed'
+inpath = r'C:\Users\Preprocessed'
 
 # Only Ground Range Detected images:
 product_type = 'GRD'
@@ -62,11 +61,10 @@ print(files)
 # understand and make the subsetting.
 
 # Directory where the aoi shapefile is located:
-shapefile_path = r'C:\Users\erlis\OneDrive\Área de Trabalho\2023_03_08-Dados_Isabel_Erli\Vetores'
-#r'C:\Users\VectorData'
+shapefile_path =r'C:\Users\VectorData'
 
 # Importing aoi shapefile as a geopandas object:
-aoi = gpd.read_file(shapefile_path + '\\aoi.shp')#'\\MyAOIshapefile.shp')
+aoi = gpd.read_file(shapefile_path + '\\MyAOIshapefile.shp')
 # Casting the aoi from geopandas to a gpd.Series object:
 aoi = aoi.geometry.to_wkt()
 # Casting the aoi from gpd.Series to a WKT (Well-Known-Text) format:
@@ -129,4 +127,4 @@ for i in files:
 # As the crop and export were already applied, the following command will
 # delete the original files (the preprocessed scenes). Please uncomment
 # the following line:
-shutil.rmtree(inpath)
+#shutil.rmtree(inpath)

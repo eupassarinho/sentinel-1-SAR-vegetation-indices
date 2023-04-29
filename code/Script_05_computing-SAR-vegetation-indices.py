@@ -439,7 +439,7 @@ def do_sar_vi(_outpath_):
         gc.collect()
         do_dprvic(product, outpath)
         gc.collect()
-        do_dpsvi(product, outpath, vv_max_param = 1.5)
+        do_dpsvi(product, outpath)
         gc.collect()
         do_dpsvim(product, outpath)
         gc.collect()
