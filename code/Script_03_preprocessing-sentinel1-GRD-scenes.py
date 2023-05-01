@@ -36,14 +36,14 @@ from snappy import ProductIO
 #%% READING MULTIPLE PRODUCTS ('.zip') WITH GLOB LOOPING
 
 # Path where Sentinel-1 just got ('.zip') were located:
-inpath = r'C:\Users\path_to\your_GRD_Level_1_Sentinel-1_scenes'
+inpath = r'J:/path_to/your-GRD_Level_1-images'
 
 # Only Ground Range Detected images:
 product_type = 'GRD'
 
 # Note that only ".zip" files will be search, i.e., the files as downloaded in
 # the Script 01:
-files = glob.glob(inpath + '**/*.dim')
+files = glob.glob(inpath + '**/*.zip')
 
 files = list(filter(lambda k: product_type in k, files))
 
@@ -238,7 +238,7 @@ def main(_outpath_):
 #%% DOING PREPROCESSING
 
 # Define your output directory (where the preprocessed scenes shall be saved):
-outpath = r'C:\folder_path_to_save\your_GRD_Preprocessed'
+outpath = r'J:/path_to/your-GRD_Level_2-processed-images'
 
 if __name__== "__main__":
     main(outpath)

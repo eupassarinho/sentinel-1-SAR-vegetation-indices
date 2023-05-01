@@ -34,7 +34,7 @@ from snappy import ProductData, ProductUtils
 #%% SETTING WORK DIRECTORY AND READING FILES
 
 # Path where are located the Pre-processed Sentinel-1 GRD
-inpath = r'C:\Users\PreprocessedAndCropped'
+inpath = r'J:/path_to/your-GRD_Level_2-processed-and-subset-images'
 
 # Pattern to match in file names (mainly because at the same folder are
 # contained SLC Sentinel-1 archives):
@@ -539,11 +539,11 @@ def do_merge_and_write(_sar_vi_path_, _outpath_):
 #%% APPLYING OPERATORS
 
 # Directory path where the program will store SAR vegetation indices files:
-sar_vi_path = r'C:\Users\TemporaryBands'
+sar_vi_path = r'J:/path_to/your-temporary-bands'
 
 # Directory where the program will store merge Sentinel-1 GRD original scenes
 # and its derived SAR Vegetation Indices:
-outpath = r'C:\Users\GRD_Processed'
+outpath = r'J:/path_to/your-GRD_Level_2-processed-and-subset-with-VIs'
 
 # Applying operators:
 do_sar_vi(sar_vi_path)

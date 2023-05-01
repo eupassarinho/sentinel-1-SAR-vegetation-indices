@@ -41,12 +41,12 @@ from snappy import ProductIO, WKTReader
 #%% READING MULTIPLE PRODUCTS ('.dim') WITH GLOB LOOPING
 
 # Path where Sentinel-1 preprocessed images ('.dim') were located:
-inpath = r'C:\Users\Preprocessed'
+inpath = r'J:/path_to/your-GRD_Level_2-processed-images'
 
 # Only Ground Range Detected images:
 product_type = 'GRD'
 
-files = glob.glob(inpath + '**/*.zip')
+files = glob.glob(inpath + '**/*.dim')
 
 files = list(filter(lambda k: product_type in k, files))
 
@@ -61,7 +61,7 @@ print(files)
 # understand and make the subsetting.
 
 # Directory where the aoi shapefile is located:
-shapefile_path =r'C:\Users\VectorData'
+shapefile_path =r'J:\path_to\your-vectorial-data'
 
 # Importing aoi shapefile as a geopandas object:
 aoi = gpd.read_file(shapefile_path + '\\MyAOIshapefile.shp')
@@ -73,7 +73,7 @@ aoi = aoi[0]
 #%% SUBSETTING SCENES WITH LOOPING
 
 # Directory to save the cropped products:
-outpath = r'C:\Users\PreprocessedAndCropped'
+outpath = r'J:/path_to/your-GRD_Level_2-processed-and-subset-images'
 
 if not os.path.exists(outpath):
     os.makedirs(outpath)

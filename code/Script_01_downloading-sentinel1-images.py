@@ -43,7 +43,7 @@ from shapely.geometry import MultiPoint, shape
 
 #%% USING PANDAS TO IMPORT THE DATASET CONTAINING SAMPLING POINTS:
 
-file_path = r'C:/Users/MyName/Documents'
+file_path = r'J:/path_to/your-spatial_database'
 
 # As my geographic coordinates are stored in a Excel file, I'm importing it
 # as a pandas object:
@@ -127,7 +127,7 @@ else:
 #%% USE THIS CHUNK TO DOWNLOAD A SINGLE PRODUCT
 
 # Directory to save the image:
-outpath = r'C:\Users\GRD_Level_1'
+outpath = r'J:/path_to/your-GRD_Level_1-images'
 
 results[results_index].download(path = str(outpath), session = user_pass_session)
 
@@ -139,7 +139,7 @@ listdir(outpath)
 # chunk won't work properly, because "download" is not a list property.
 
 # Directory to save the image:
-outpath = r'C:\Users\GRD_Level_1'
+outpath = r'J:/path_to/your-GRD_Level_1-images'
 
 results[4:8].download(path = str(outpath), session = user_pass_session)
 
