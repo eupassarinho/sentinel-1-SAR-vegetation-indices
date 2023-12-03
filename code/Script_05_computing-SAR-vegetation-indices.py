@@ -34,7 +34,7 @@ from snappy import ProductData, ProductUtils
 #%% SETTING WORK DIRECTORY AND READING FILES
 
 # Path where are located the Pre-processed Sentinel-1 GRD
-inpath = r'J:/path_to/your-GRD_Level_2-processed-and-subset-images'
+inpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\S1-GRD-Level_2-Algodao'
 
 # Pattern to match in file names (mainly because at the same folder are
 # contained SLC Sentinel-1 archives):
@@ -52,7 +52,7 @@ print(files)
 #%% DEFINING FUNCTIONS
 
 # Function to compute the CR (Cross-Ratio, Frison et al. (2018)) index,
-# using Gamma0 (in dB). If the data is calibrated to Sigma0, change the band name.
+# using Sigma0 (in dB). If the data is calibrated to Sigma0, change the band name.
 def do_cr(source, outpath_):
     
     outpath = str(outpath_)
@@ -60,8 +60,8 @@ def do_cr(source, outpath_):
     if not os.path.exists(outpath):
         os.makedirs(outpath)
         
-    VH = source.getBand('Gamma0_VH')
-    VV = source.getBand('Gamma0_VV')
+    VH = source.getBand('Sigma0_VH')
+    VV = source.getBand('Sigma0_VV')
     
     w = source.getSceneRasterWidth()
     h = source.getSceneRasterHeight()
@@ -103,8 +103,8 @@ def do_dprvic(source, outpath_):
     if not os.path.exists(outpath):
         os.makedirs(outpath)
         
-    VH = source.getBand('Gamma0_VH')
-    VV = source.getBand('Gamma0_VV')
+    VH = source.getBand('Sigma0_VH')
+    VV = source.getBand('Sigma0_VV')
     
     w = source.getSceneRasterWidth()
     h = source.getSceneRasterHeight()
@@ -152,8 +152,8 @@ def do_desc(source, outpath_):
     if not os.path.exists(outpath):
         os.makedirs(outpath)
         
-    VH = source.getBand('Gamma0_VH')
-    VV = source.getBand('Gamma0_VV')
+    VH = source.getBand('Sigma0_VH')
+    VV = source.getBand('Sigma0_VV')
     
     w = source.getSceneRasterWidth()
     h = source.getSceneRasterHeight()
@@ -210,8 +210,8 @@ def do_dpsvi(source, outpath_, vv_max_param = "null"):
     if not os.path.exists(outpath):
         os.makedirs(outpath)
     
-    VH = source.getBand('Gamma0_VH')
-    VV = source.getBand('Gamma0_VV')
+    VH = source.getBand('Sigma0_VH')
+    VV = source.getBand('Sigma0_VV')
     
     w = source.getSceneRasterWidth()
     h = source.getSceneRasterHeight()
@@ -278,8 +278,8 @@ def do_dpsvim(source, outpath_):
     if not os.path.exists(outpath):
         os.makedirs(outpath)
         
-    VH = source.getBand('Gamma0_VH')
-    VV = source.getBand('Gamma0_VV')
+    VH = source.getBand('Sigma0_VH')
+    VV = source.getBand('Sigma0_VV')
     
     w = source.getSceneRasterWidth()
     h = source.getSceneRasterHeight()
@@ -322,8 +322,8 @@ def do_pol(source, outpath_):
     if not os.path.exists(outpath):
         os.makedirs(outpath)
         
-    VH = source.getBand('Gamma0_VH')
-    VV = source.getBand('Gamma0_VV')
+    VH = source.getBand('Sigma0_VH')
+    VV = source.getBand('Sigma0_VV')
     
     w = source.getSceneRasterWidth()
     h = source.getSceneRasterHeight()
@@ -366,8 +366,8 @@ def do_rvim(source, outpath_):
     if not os.path.exists(outpath):
         os.makedirs(outpath)
         
-    VH = source.getBand('Gamma0_VH')
-    VV = source.getBand('Gamma0_VV')
+    VH = source.getBand('Sigma0_VH')
+    VV = source.getBand('Sigma0_VV')
     
     w = source.getSceneRasterWidth()
     h = source.getSceneRasterHeight()
@@ -435,11 +435,11 @@ def do_sar_vi(_outpath_):
         
         do_cr(product, outpath)
         gc.collect()
-        do_desc(product, outpath)
-        gc.collect()
+        #do_desc(product, outpath)
+        #gc.collect()
         do_dprvic(product, outpath)
         gc.collect()
-        do_dpsvi(product, outpath)
+        do_dpsvi(product, outpath, vv_max_param = 3)
         gc.collect()
         do_dpsvim(product, outpath)
         gc.collect()
@@ -455,7 +455,7 @@ def do_merge(source, path_):
     
     cr = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_CR.dim"))
     dprvic = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPRVIC.dim"))
-    desc = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_desc.dim"))
+    #desc = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_desc.dim"))
     dpsvi = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPSVI.dim"))
     dpsvim = ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_DPSVIm.dim"))
     pol =  ProductIO.readProduct(str(str(path_) + '\\' + source.getName() + "_Pol.dim"))
@@ -463,14 +463,15 @@ def do_merge(source, path_):
  
     parameters = HashMap()
     merged_bands = GPF.createProduct('BandMerge', parameters,
-                                     (cr, dprvic, desc, dpsvi, dpsvim, pol, rvim))
+                                     (cr, dprvic, #desc,
+                                      dpsvi, dpsvim, pol, rvim))
         
     del cr
     gc.collect()
     del dprvic
     gc.collect()
-    del desc
-    gc.collect()
+    #del desc
+    #gc.collect()
     del dpsvi
     gc.collect()
     del dpsvim
@@ -539,11 +540,11 @@ def do_merge_and_write(_sar_vi_path_, _outpath_):
 #%% APPLYING OPERATORS
 
 # Directory path where the program will store SAR vegetation indices files:
-sar_vi_path = r'J:/path_to/your-temporary-bands'
+sar_vi_path = r'C:\Users\erlis\OneDrive\Área de Trabalho\S1-temporary-bands'
 
 # Directory where the program will store merge Sentinel-1 GRD original scenes
 # and its derived SAR Vegetation Indices:
-outpath = r'J:/path_to/your-GRD_Level_2-processed-and-subset-with-VIs'
+outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\S1-GRD-Level_2-Algodao-VIs'
 
 # Applying operators:
 do_sar_vi(sar_vi_path)

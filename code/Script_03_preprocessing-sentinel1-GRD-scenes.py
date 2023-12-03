@@ -36,7 +36,7 @@ from snappy import ProductIO
 #%% READING MULTIPLE PRODUCTS ('.zip') WITH GLOB LOOPING
 
 # Path where Sentinel-1 just got ('.zip') were located:
-inpath = r'J:/path_to/your-GRD_Level_1-images'
+inpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\S1-GRD-Level_1-Algodao'
 
 # Only Ground Range Detected images:
 product_type = 'GRD'
@@ -107,8 +107,8 @@ def do_speckle_filtering(source):
     print('\tSpeckle filtering...')
     parameters = HashMap()
     parameters.put('filter', 'Lee Sigma')
-    parameters.put('filterSizeX', '11')
-    parameters.put('filterSizeY', '11')
+    parameters.put('filterSizeX', '7')
+    parameters.put('filterSizeY', '7')
     parameters.put('Sigma', '0.9')
     output = GPF.createProduct('Speckle-Filter', parameters, source)
     return output
@@ -123,7 +123,7 @@ def do_radiometric_terrain_flattening(source):
     #parameters.put("externalDEMNoDataValue", "-32768")
     #parameters.put("externalDEMApplyEGM", "false")
     parameters.put('imgResamplingMethod', 'BILINEAR_INTERPOLATION')
-    parameters.put('oversamplingMultiple', '4.0')
+    parameters.put('oversamplingMultiple', '1.0')
     output = GPF.createProduct('Terrain-Flattening', parameters, source)
     return output
 
@@ -152,7 +152,7 @@ def do_terrain_correction(source, proj, downsample):
 #%% SETTING THE MAIN FUNCTION TO DO ALL THE PREPROCESSING LOOPING WITH FILES
 
 # String to add to product name once the processing is finished:
-processing_steps = '_Orb_NR_Brd_Cal_Spk_TF_TC'
+processing_steps = '_Orb_NR_Brd_Cal_Spk_TC'
 
 # Setting main function:
 
@@ -215,15 +215,15 @@ def main(_outpath_):
         del calibrated
         gc.collect()
         
-        terrain_flattened = do_radiometric_terrain_flattening(down_filtered)
+        #terrain_flattened = do_radiometric_terrain_flattening(down_filtered)
         
-        del down_filtered
-        gc.collect()
+        #del down_filtered
+        #gc.collect()
         
-        tercorrected = do_terrain_correction(terrain_flattened, proj, 0)
+        tercorrected = do_terrain_correction(down_filtered, proj, 0)
         
-        del terrain_flattened
-        gc.collect()
+        #del terrain_flattened
+        #gc.collect()
         
         print("Writing...")
         ProductIO.writeProduct(tercorrected, _outpath_ + '\\' + product_name + processing_steps,
@@ -238,7 +238,7 @@ def main(_outpath_):
 #%% DOING PREPROCESSING
 
 # Define your output directory (where the preprocessed scenes shall be saved):
-outpath = r'J:/path_to/your-GRD_Level_2-processed-images'
+outpath = r'C:\Users\erlis\OneDrive\Área de Trabalho\S1-GRD-Level_2-Algodao'
 
 if __name__== "__main__":
     main(outpath)
